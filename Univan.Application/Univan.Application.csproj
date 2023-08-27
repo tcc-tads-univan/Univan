@@ -9,13 +9,9 @@
   <ItemGroup>
     <Folder Include="Abstractions\" />
     <Folder Include="Behaviors\" />
-    <Folder Include="Contracts\" />
-    <Folder Include="Services\Driver\Command\" />
     <Folder Include="Services\Driver\Event\" />
-    <Folder Include="Services\Driver\Queries\" />
     <Folder Include="Services\Authentication\" />
     <Folder Include="Services\Student\Event\" />
-    <Folder Include="Services\Student\Queries\" />
     <Folder Include="Services\Subscriber\" />
   </ItemGroup>
 

@@ -1,16 +1,12 @@
-﻿using FluentValidation;
+﻿using Univan.Application.Services.Common;
 
 namespace Univan.Application.Services.Student.Command.CreateStudent
 {
-    public sealed class CreateStudentCommandValidator : AbstractValidator<CreateStudentCommand>
+    public sealed class CreateStudentCommandValidator : UserBaseCommandValidator<CreateStudentCommand>
     {
         public CreateStudentCommandValidator()
         {
-            RuleFor(s => s.Name).MaximumLength(120).NotEmpty();
 
-            RuleFor(s => s.Email).EmailAddress();
-
-            RuleFor(s => s.PhoneNumber).NotEmpty();
         }
     }
 }
