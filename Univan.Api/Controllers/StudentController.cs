@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MapsterMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Student;
+using Univan.Application.Services.Student.Command.CreateStudent;
 
 namespace Univan.Api.Controllers
 {
@@ -7,9 +10,12 @@ namespace Univan.Api.Controllers
     [Route("api/[controller]")]
     public class StudentController : ControllerBase
     {
-        public StudentController()
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+        public StudentController(IMediator mediator, IMapper mapper)
         {
-
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -21,10 +27,17 @@ namespace Univan.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStudent(CreateStudentRequest createStudentRequest)
+        public async Task<IActionResult> CreateStudent(CreateStudentRequest request)
         {
-            await Task.CompletedTask;
-            return Ok();
+            var command = _mapper.Map<CreateStudentCommand>(request);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+
+            //Problem Details
+            return BadRequest();
         }
     }
 }

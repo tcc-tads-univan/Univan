@@ -14,7 +14,9 @@ namespace Univan.Application.Services.Common
             RuleFor(u => u.PhoneNumber).NotEmpty();
 
             RuleFor(u => u.Cpf).NotEmpty()
-                .MaximumLength(11);
+                .MaximumLength(11)
+                .Matches(@"^\d$");
+                
 
             RuleFor(u => u.Birthday).NotEmpty()
                 .GreaterThan(DateTime.MinValue)

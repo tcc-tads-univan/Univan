@@ -1,19 +1,36 @@
 ﻿using FluentResults;
-using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Univan.Application.Abstractions.Security;
 
 namespace Univan.Application.Services.Student.Command.CreateStudent
 {
     public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, Result>
     {
-        public Task<Result> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
+        private readonly IPasswordManager _passwordManager;
+        public CreateStudentCommandHandler(IPasswordManager passwordManager)
         {
-            throw new NotImplementedException();
+            _passwordManager = passwordManager;
+        }
+        public async Task<Result> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
+        {
+            var hashPassword = _passwordManager.HashPassword(request.Password);
+
+            //Upload image
+
+            Domain.Entities.Student student = new Domain.Entities.Student()
+            {
+                Cpf = request.Cpf,
+                Email = request.Email,
+                Name = request.Name,
+                PhoneNumber = request.PhoneNumber,
+                Rating = 0M,
+                Birthday = request.Birthday,
+                Password = hashPassword
+            };
+
+            //repo save
+
+            return Result.Ok();
         }
     }
 }

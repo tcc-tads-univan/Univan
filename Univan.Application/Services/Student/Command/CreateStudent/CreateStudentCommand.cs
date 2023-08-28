@@ -4,7 +4,7 @@ using Univan.Application.Services.Common;
 
 namespace Univan.Application.Services.Student.Command.CreateStudent
 {
-    public class CreateStudentCommand : UserCommand, IRequest<Result>
+    public class CreateStudentCommand : UserBaseCommand, IRequest<Result>
     {
 
     }
