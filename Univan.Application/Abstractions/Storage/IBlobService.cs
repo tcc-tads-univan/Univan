@@ -2,8 +2,6 @@
 {
     public interface IBlobService
     {
-        Task UploadImage(Stream photoStream);
-
-        Task GetImage(string imageId);
+        Task<string> UploadImage(string imageName, Stream photoStream);
     }
 }

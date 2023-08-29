@@ -1,17 +1,29 @@
-﻿using Univan.Application.Abstractions.Storage;
+﻿using Azure.Storage.Blobs;
+using Microsoft.Extensions.Logging;
+using Univan.Application.Abstractions.Storage;
 
 namespace Univan.Infrastructure.Storage
 {
     public class BlobService : IBlobService
     {
-        public Task GetImage(string imageId)
+        private const string containerName = "profilephotos"; //Puxar options dps
+
+        private readonly ILogger<BlobService> _logger;
+
+        public BlobService(ILogger<BlobService> logger)
         {
-            throw new NotImplementedException();
+            _logger = logger;
         }
 
-        public Task UploadImage(Stream photoStream)
+        public async Task<string> UploadImage(string imageNamePrefix, Stream photoStream)
         {
-            throw new NotImplementedException();
+            BlobServiceClient blobServiceClient = new("connectionString");
+            var container = blobServiceClient.GetBlobContainerClient(containerName);
+
+            photoStream.Position = 0;
+            string imageName = $"{imageNamePrefix}_{Guid.NewGuid()}"; 
+            await container.UploadBlobAsync(imageName, photoStream);
+            return ""; //storageName + container + fileName Colocar em options
         }
     }
 }
