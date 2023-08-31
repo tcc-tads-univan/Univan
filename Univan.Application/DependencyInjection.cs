@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Univan.Application.Behaviors;
 
 namespace Univan.Application
 {
@@ -12,7 +14,7 @@ namespace Univan.Application
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
 
-            //PipelineBehavior
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             return services;
         }

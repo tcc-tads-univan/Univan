@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Univan.Application\Univan.Application.csproj" />
+    <ProjectReference Include="..\Univan.Infrastructure\Univan.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
