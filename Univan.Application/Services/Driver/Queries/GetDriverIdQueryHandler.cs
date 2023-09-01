@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Univan.Application.Contracts.Driver;
+using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Driver.Queries
 {

@@ -9,19 +9,14 @@ namespace Univan.Api.MapperConfiguration
     {
         public void Register(TypeAdapterConfig config)
         {
-            //config.NewConfig<CreateStudentRequest, CreateStudentCommand>()
-            //    .Map(dest => dest.Cpf, src => FormatCpf(src.Cpf))
-            //    .Map(dest => dest.Photo, src => src.ProfilePicture.OpenReadStream())
-            //    .MapToConstructor(true);  
-
             config.NewConfig<CreateStudentRequest, CreateStudentCommand>()
                 .ConstructUsing(src => new CreateStudentCommand(src.Name,
                 src.Email,
                 src.Password,
-                src.Cpf,
+                FormatCpf(src.Cpf),
                 src.PhoneNumber,
                 src.Birthday,
-                src.ProfilePicture.OpenReadStream()));
+                GetPictureValue(src.ProfilePicture)));
 
             config.NewConfig<StudentResult, StudentResponse>();
         }
@@ -29,6 +24,11 @@ namespace Univan.Api.MapperConfiguration
         private string FormatCpf(string cpf)
         {
             return cpf.Replace(".", "").Replace("-", "");
+        }
+
+        private Stream GetPictureValue(IFormFile image)
+        {
+            return image is null ? Stream.Null : image.OpenReadStream();
         }
     }
 }

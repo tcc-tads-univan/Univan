@@ -9,7 +9,6 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<Student> builder)
         {
             builder.ToTable("Student");
-            builder.HasKey(c => c.StudentId);
             builder.Property(d => d.Id).HasColumnName("UserId");
         }
     }

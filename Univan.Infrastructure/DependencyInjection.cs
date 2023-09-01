@@ -21,8 +21,6 @@ namespace Univan.Infrastructure
             services.AddScoped<IBlobService, BlobService>();
             services.AddScoped<IPasswordManager, PasswordManager>();
 
-
-
             services.AddDbContext<UnivanContext>(options => options.UseSqlServer(
                 configuration.GetConnectionString("UnivanDatabase")));
 

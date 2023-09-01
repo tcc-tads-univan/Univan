@@ -9,7 +9,6 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<Driver> builder)
         {
             builder.ToTable("Driver");
-            builder.HasKey(d => d.DriverId);
             builder.Property(d => d.Cnh).IsRequired().HasMaxLength(11);
             builder.Property(d => d.Id).HasColumnName("UserId");
         }

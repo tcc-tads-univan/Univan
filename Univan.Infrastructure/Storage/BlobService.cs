@@ -7,8 +7,6 @@ namespace Univan.Infrastructure.Storage
 {
     public class BlobService : IBlobService
     {
-        private const string containerName = "profilephotos"; //Puxar options dps
-
         private readonly BlobSettings _blobSettings;
         private readonly ILogger<BlobService> _logger;
 
@@ -18,18 +16,32 @@ namespace Univan.Infrastructure.Storage
             _blobSettings = blobSettings.Value;
         }
 
-        public async Task<string> UploadImage(string imageNamePrefix, Stream photoStream)
+        public Task<string> GetUrlProfilePicture(string imageName, Stream photoStream)
         {
-            BlobServiceClient blobServiceClient = new("connectionString");
-            var container = blobServiceClient.GetBlobContainerClient(containerName);
+            if(photoStream != Stream.Null)
+            {
+                return UploadUserImageAsync(imageName, photoStream);
+            }
+
+            return Task.FromResult(GetDefaultUrlImage());
+        }
+
+        private async Task<string> UploadUserImageAsync(string imageNamePrefix, Stream photoStream)
+        {
+            BlobServiceClient blobServiceClient = new(_blobSettings.ConnectionString);
+            var container = blobServiceClient.GetBlobContainerClient(_blobSettings.ContainerName);
 
             photoStream.Position = 0;
             string imageName = $"{imageNamePrefix}_{Guid.NewGuid()}"; 
             await container.UploadBlobAsync(imageName, photoStream);
-            return FormatBlobUrlName(imageName);
+            return FormatUserUrlImage(imageName);
+        }
+        public string GetDefaultUrlImage()
+        {
+            return FormatUserUrlImage("dafault");
         }
 
-        private string FormatBlobUrlName(string imageName)
+        private string FormatUserUrlImage(string imageName)
         {
             return $"https://{_blobSettings.StorageName}.azure/{_blobSettings.ContainerName}/{imageName}";
         }

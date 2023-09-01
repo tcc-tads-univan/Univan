@@ -21,8 +21,8 @@ namespace Univan.Application.Services.Student.Command.CreateStudent
         {
             var hashPassword = _passwordManager.HashPassword(request.Password);
 
-            var photoUrl = await _blobService.UploadImage(request.Name, request.Photo);
-
+            var photoUrl = await _blobService.GetUrlProfilePicture(request.Name, request.Photo);
+            
             Domain.Entities.Student student = new Domain.Entities.Student()
             {
                 Cpf = request.Cpf,
@@ -39,5 +39,6 @@ namespace Univan.Application.Services.Student.Command.CreateStudent
 
             return Result.Ok();
         }
+
     }
 }
