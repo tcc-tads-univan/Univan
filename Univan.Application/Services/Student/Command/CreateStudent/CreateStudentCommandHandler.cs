@@ -22,7 +22,9 @@ namespace Univan.Application.Services.Student.Command.CreateStudent
             var hashPassword = _passwordManager.HashPassword(request.Password);
 
             var photoUrl = await _blobService.GetUrlProfilePicture(request.Name, request.Photo);
-            
+
+            //REGRAS DE NEGÓCIO EMAILALREADYEXIST, CPFALREADYEXIST
+
             Domain.Entities.Student student = new Domain.Entities.Student()
             {
                 Cpf = request.Cpf,
@@ -35,7 +37,7 @@ namespace Univan.Application.Services.Student.Command.CreateStudent
                 PhotoUrl = photoUrl
             };
 
-            await _studentRepository.SaveStudent(student);
+            await _studentRepository.SaveUserAsync(student);
 
             return Result.Ok();
         }

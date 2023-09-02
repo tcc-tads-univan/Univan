@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using MediatR;
 using Univan.Application.Contracts.Driver;
+using Univan.Application.Validation;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Driver.Queries
@@ -15,11 +16,11 @@ namespace Univan.Application.Services.Driver.Queries
 
         public async Task<Result<DriverResult>> Handle(GetDriverByIdQuery request, CancellationToken cancellationToken)
         {
-            var driver = await _driverRepository.GetDriverById(request.DriverId);
+            var driver = await _driverRepository.GetUserById(request.DriverId);
             
             if(driver is null)
             {
-                //return domain error
+                return Result.Fail(ValidationErrors.Driver.NotFound);
             }
 
             var driverResult = new DriverResult()

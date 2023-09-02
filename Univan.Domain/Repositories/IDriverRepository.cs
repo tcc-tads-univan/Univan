@@ -2,9 +2,7 @@
 
 namespace Univan.Domain.Repositories
 {
-    public interface IDriverRepository
+    public interface IDriverRepository : IUserBaseRepository<Driver>
     {
-        Task SaveDriver(Driver driver);
-        Task<Driver> GetDriverById(int userId);
     }
 }

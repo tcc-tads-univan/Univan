@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using MediatR;
 using Univan.Application.Contracts.Student;
+using Univan.Application.Validation;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Student.Queries.GetStudentById
@@ -14,7 +15,13 @@ namespace Univan.Application.Services.Student.Queries.GetStudentById
         }
         public async Task<Result<StudentResult>> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
         {
-            var student = await _studentRepository.GetStudentById(request.StudentId);
+            var student = await _studentRepository.GetUserById(request.StudentId);
+
+            if(student is null)
+            {
+                return Result.Fail(ValidationErrors.Student.NotFound);
+            }
+
             StudentResult result = new StudentResult()
             {
                 Id = student.Id,
@@ -26,6 +33,7 @@ namespace Univan.Application.Services.Student.Queries.GetStudentById
                 PhotoUrl = student.PhotoUrl,
                 Rating = student.Rating
             };
+
             return Result.Ok(result);
         }
     }

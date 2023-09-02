@@ -25,7 +25,9 @@ namespace Univan.Application.Services.Driver.Command.CreateDriver
 
             var photoUrl = await _blobService.GetUrlProfilePicture(request.Name, request.Photo);
 
-            Domain.Entities.Driver student = new Domain.Entities.Driver()
+            //REGRAS DE NEGÓCIO EMAILALREADYEXIST, CPFALREADYEXIST
+
+            Domain.Entities.Driver driver = new Domain.Entities.Driver()
             {
                 Cpf = request.Cpf,
                 Email = request.Email,
@@ -38,7 +40,7 @@ namespace Univan.Application.Services.Driver.Command.CreateDriver
                 Cnh = request.Cnh
             };
 
-            await _driverRepository.SaveDriver(student);
+            await _driverRepository.SaveUserAsync(driver);
 
             return Result.Ok();
         }

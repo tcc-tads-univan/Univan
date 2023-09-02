@@ -2,10 +2,8 @@
 
 namespace Univan.Domain.Repositories
 {
-    public interface IStudentRepository
+    public interface IStudentRepository : IUserBaseRepository<Student>
     {
-        Task SaveStudent(Student student);
-
-        Task<Student> GetStudentById(int userId);
+        //Specific methods of studentRepository
     }
 }

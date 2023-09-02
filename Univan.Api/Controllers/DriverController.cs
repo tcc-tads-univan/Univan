@@ -7,9 +7,8 @@ using Univan.Application.Services.Driver.Queries;
 
 namespace Univan.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class DriverController : ControllerBase
+    public class DriverController : BaseController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
@@ -30,7 +29,7 @@ namespace Univan.Api.Controllers
                 return Ok(_mapper.Map<DriverResponse>(result.Value));
             }
 
-            return BadRequest();
+            return ProblemDetails(result.Errors);
         }
 
         [HttpPost]
@@ -43,7 +42,7 @@ namespace Univan.Api.Controllers
                 return StatusCode(StatusCodes.Status201Created);
             }
 
-            return BadRequest();
+            return ProblemDetails(result.Errors);
         }
     }
 }

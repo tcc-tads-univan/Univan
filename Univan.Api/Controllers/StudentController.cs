@@ -7,9 +7,8 @@ using Univan.Application.Services.Student.Queries.GetStudentById;
 
 namespace Univan.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class StudentController : ControllerBase
+    public class StudentController : BaseController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
@@ -31,8 +30,7 @@ namespace Univan.Api.Controllers
                 return Ok(student);
             }
 
-            return BadRequest();
-            //return ProblemDetails();
+            return ProblemDetails(result.Errors);
         }
 
         [HttpPost]
@@ -45,8 +43,7 @@ namespace Univan.Api.Controllers
                 return StatusCode(StatusCodes.Status201Created);
             }
 
-            //Problem Details
-            return BadRequest();
+            return ProblemDetails(result.Errors);
         }
     }
 }
