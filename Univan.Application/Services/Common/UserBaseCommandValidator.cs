@@ -11,7 +11,9 @@ namespace Univan.Application.Services.Common
 
             RuleFor(u => u.Email).EmailAddress();
 
-            RuleFor(u => u.PhoneNumber).NotEmpty();
+            RuleFor(u => u.PhoneNumber).NotEmpty()
+                .MaximumLength(11)
+                .Matches(@"^\d");
 
             RuleFor(u => u.Cpf).NotEmpty()
                 .MaximumLength(11)

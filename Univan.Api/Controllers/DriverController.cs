@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MapsterMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Driver;
+using Univan.Application.Services.Driver.Command.CreateDriver;
+using Univan.Application.Services.Driver.Queries;
 
 namespace Univan.Api.Controllers
 {
@@ -7,24 +11,39 @@ namespace Univan.Api.Controllers
     [Route("api/[controller]")]
     public class DriverController : ControllerBase
     {
-        public DriverController()
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
+        public DriverController(IMediator mediator, IMapper mapper)
         {
-
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [Route("{driverId}")]
         public async Task<IActionResult> GetDriverById(int driverId)
         {
-            await Task.CompletedTask;
-            return Ok();
+            var command = new GetDriverByIdQuery(driverId);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return Ok(_mapper.Map<DriverResponse>(result.Value));
+            }
+
+            return BadRequest();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateDriver(CreateDriverRequest createDriverRequest)
+        public async Task<IActionResult> CreateDriver([FromForm] CreateDriverRequest request)
         {
-            await Task.CompletedTask;
-            return Ok();
+            var command = _mapper.Map<CreateDriverCommand>(request);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+
+            return BadRequest();
         }
     }
 }

@@ -6,8 +6,9 @@ namespace Univan.Application.Services.Driver.Command.CreateDriver
     {
         public CreateDriverCommandValidator()
         {
-            RuleFor(s => s.Cnh).NotEmpty().
-                MaximumLength(11);
+            RuleFor(s => s.Cnh).NotEmpty()
+                .MaximumLength(11)
+                .Matches(@"^\d");
         }
     }
 }

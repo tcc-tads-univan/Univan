@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Univan.Application.Abstractions.Storage;
@@ -31,10 +32,14 @@ namespace Univan.Infrastructure.Storage
             BlobServiceClient blobServiceClient = new(_blobSettings.ConnectionString);
             var container = blobServiceClient.GetBlobContainerClient(_blobSettings.ContainerName);
 
+            string imageName = $"{imageNamePrefix}_{Guid.NewGuid()}";
+
+            BlobClient blobImage = container.GetBlobClient(imageName);
+
             photoStream.Position = 0;
-            string imageName = $"{imageNamePrefix}_{Guid.NewGuid()}"; 
-            await container.UploadBlobAsync(imageName, photoStream);
-            return FormatUserUrlImage(imageName);
+            await blobImage.UploadAsync(photoStream, SetUploadBlobConfigurations());
+            
+            return blobImage.Uri.ToString();
         }
         public string GetDefaultUrlImage()
         {
@@ -43,7 +48,18 @@ namespace Univan.Infrastructure.Storage
 
         private string FormatUserUrlImage(string imageName)
         {
-            return $"https://{_blobSettings.StorageName}.azure/{_blobSettings.ContainerName}/{imageName}";
+            return $"https://{_blobSettings.StorageName}.blob.core.windows.net/{_blobSettings.ContainerName}/{imageName}";
+        }
+
+        private BlobUploadOptions SetUploadBlobConfigurations()
+        {
+            return new BlobUploadOptions()
+            {
+                HttpHeaders = new BlobHttpHeaders
+                {
+                    ContentType = "image/webp"
+                }
+            };
         }
     }
 }
