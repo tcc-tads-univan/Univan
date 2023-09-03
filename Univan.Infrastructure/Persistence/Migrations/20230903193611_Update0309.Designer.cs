@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Univan.Infrastructure.Persistence.Context;
 
@@ -11,9 +12,11 @@ using Univan.Infrastructure.Persistence.Context;
 namespace Univan.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UnivanContext))]
-    partial class UnivanContextModelSnapshot : ModelSnapshot
+    [Migration("20230903193611_Update0309")]
+    partial class Update0309
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

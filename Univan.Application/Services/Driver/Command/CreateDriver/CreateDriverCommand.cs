@@ -8,8 +8,8 @@ namespace Univan.Application.Services.Driver.Command.CreateDriver
     {
         public string Cnh { get; set; }
 
-        public CreateDriverCommand(string cnh, string name, string email, string password, string cpf, string phoneNumber, DateTime birthday, Stream photo)
-            : base(name, email, password, cpf, phoneNumber, birthday, photo)
+        public CreateDriverCommand(string cnh, string name, string email, string password, string cpf, string phoneNumber, DateTime birthdate, Stream photo)
+            : base(name, email, password, cpf, phoneNumber, birthdate, photo)
         {
             Cnh = cnh;
         }

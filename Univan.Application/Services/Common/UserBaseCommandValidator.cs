@@ -20,7 +20,7 @@ namespace Univan.Application.Services.Common
                 .Matches(@"^\d");
                 
 
-            RuleFor(u => u.Birthday).NotEmpty()
+            RuleFor(u => u.Birthdate).NotEmpty()
                 .GreaterThan(DateTime.MinValue)
                 .LessThan(DateTime.Now);
 

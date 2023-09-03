@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Text.Json;
 
 namespace Univan.Api.Middleware
 {
@@ -16,22 +19,57 @@ namespace Univan.Api.Middleware
             {
                 await next(context);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(exception, exception.Message);
 
-                ProblemDetails problemDetails = new ProblemDetails()
+                string response;
+
+                if(exception is ValidationException ve)
                 {
-                    Type = "Server Error",
-                    Title = "Server Error",
-                    Detail = "An internal server has occurred",
-                    Status = (int)HttpStatusCode.InternalServerError
-                };
+                    response = HandleValidationExeceptions(context, ve.Errors);
+                }
+                else
+                {
+                    response = HandleServerExeceptions(context);
+                }
 
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsJsonAsync(problemDetails);
                 context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(response);
             }
+        }
+
+        private string HandleValidationExeceptions(HttpContext context, IEnumerable<ValidationFailure> validationErrors)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            
+            string[] validationMessages = validationErrors.Select(s => s.ErrorMessage).ToArray();
+            Dictionary<string, string[]> Errors = new Dictionary<string, string[]>
+            {
+                {"Fields", validationMessages }
+            };
+
+            ValidationProblemDetails validationProblemDetails = new ValidationProblemDetails(Errors)
+            {
+                Status = (int)HttpStatusCode.BadRequest,
+            };
+
+            return JsonSerializer.Serialize(validationProblemDetails);
+        } 
+        
+        private string HandleServerExeceptions(HttpContext context)
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            ProblemDetails problemDetails = new ProblemDetails()
+            {
+                Type = "Server Error",
+                Title = "Server Error",
+                Detail = "An internal server has occurred",
+                Status = (int)HttpStatusCode.InternalServerError,
+            };
+
+            return JsonSerializer.Serialize(problemDetails);
         }
     }
 }

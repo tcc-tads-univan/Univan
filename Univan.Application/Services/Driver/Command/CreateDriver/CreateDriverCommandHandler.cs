@@ -34,7 +34,7 @@ namespace Univan.Application.Services.Driver.Command.CreateDriver
                 Name = request.Name,
                 PhoneNumber = request.PhoneNumber,
                 Rating = 0M,
-                Birthday = request.Birthday,
+                Birthdate = request.Birthdate,
                 Password = hashPassword,
                 PhotoUrl = photoUrl,
                 Cnh = request.Cnh

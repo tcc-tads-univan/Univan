@@ -22,8 +22,8 @@ namespace Univan.Api.Controllers
         [Route("{studentId}")]
         public async Task<IActionResult> GetStudentById(int studentId)
         {
-            var command = new GetStudentByIdQuery(studentId);
-            var result = await _mediator.Send(command);
+            var query = new GetStudentByIdQuery(studentId);
+            var result = await _mediator.Send(query);
             if (result.IsSuccess)
             {
                 var student = _mapper.Map<StudentResponse>(result.Value);

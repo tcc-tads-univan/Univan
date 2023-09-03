@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
+using Univan.Application.Services.Common;
 
 namespace Univan.Application.Services.Driver.Command.CreateDriver
 {
-    public class CreateDriverCommandValidator : AbstractValidator<CreateDriverCommand>
+    public class CreateDriverCommandValidator : UserBaseCommandValidator<CreateDriverCommand>
     {
         public CreateDriverCommandValidator()
         {

@@ -8,7 +8,7 @@
         public string Password { get; set; }
         public string Cpf { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime Birthdate { get; set; }
         public decimal Rating { get; set; }
         public string PhotoUrl { get; set; }
     }

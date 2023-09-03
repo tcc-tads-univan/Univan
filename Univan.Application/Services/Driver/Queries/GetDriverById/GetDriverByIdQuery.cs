@@ -2,7 +2,7 @@
 using MediatR;
 using Univan.Application.Contracts.Driver;
 
-namespace Univan.Application.Services.Driver.Queries
+namespace Univan.Application.Services.Driver.Queries.GetDriverById
 {
     public class GetDriverByIdQuery : IRequest<Result<DriverResult>>
     {

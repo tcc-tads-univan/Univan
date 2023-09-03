@@ -16,7 +16,7 @@ namespace Univan.Api.MapperConfiguration
                 src.Password,
                 UtilMapper.FormatCpf(src.Cpf),
                 UtilMapper.CleanPhone(src.PhoneNumber),
-                src.Birthday,
+                src.Birthdate,
                 UtilMapper.GetPictureValue(src.ProfilePicture)));
 
             config.NewConfig<DriverResult, DriverResponse>();

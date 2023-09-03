@@ -25,7 +25,7 @@ namespace Univan.Application.Services.Student.Queries.GetStudentById
             StudentResult result = new StudentResult()
             {
                 Id = student.Id,
-                Birthday = student.Birthday,
+                Birthday = student.Birthdate,
                 Cpf = student.Cpf,
                 Email = student.Email,
                 Name = student.Name,

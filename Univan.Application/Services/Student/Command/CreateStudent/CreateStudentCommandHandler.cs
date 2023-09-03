@@ -32,7 +32,7 @@ namespace Univan.Application.Services.Student.Command.CreateStudent
                 Name = request.Name,
                 PhoneNumber = request.PhoneNumber,
                 Rating = 0M,
-                Birthday = request.Birthday,
+                Birthdate = request.Birthdate,
                 Password = hashPassword,
                 PhotoUrl = photoUrl
             };

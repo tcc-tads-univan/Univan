@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Driver;
 using Univan.Application.Services.Driver.Command.CreateDriver;
-using Univan.Application.Services.Driver.Queries;
+using Univan.Application.Services.Driver.Queries.GetDriverById;
 
 namespace Univan.Api.Controllers
 {
@@ -22,8 +22,8 @@ namespace Univan.Api.Controllers
         [Route("{driverId}")]
         public async Task<IActionResult> GetDriverById(int driverId)
         {
-            var command = new GetDriverByIdQuery(driverId);
-            var result = await _mediator.Send(command);
+            var query = new GetDriverByIdQuery(driverId);
+            var result = await _mediator.Send(query);
             if (result.IsSuccess)
             {
                 return Ok(_mapper.Map<DriverResponse>(result.Value));
