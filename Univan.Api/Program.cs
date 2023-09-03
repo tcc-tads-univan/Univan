@@ -16,6 +16,19 @@ builder.Services.AddApi()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
 
+var ionicFrontend = "IonicFrontend";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: ionicFrontend,
+        policyBuilder => policyBuilder
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+        );
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(ionicFrontend);
 
 app.UseAuthorization();
 
