@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Services\Driver\Event\" />
     <Folder Include="Services\Authentication\" />
+    <Folder Include="Services\Driver\Queries\GetVehicleById\" />
     <Folder Include="Services\Student\Event\" />
     <Folder Include="Services\Subscriber\" />
   </ItemGroup>

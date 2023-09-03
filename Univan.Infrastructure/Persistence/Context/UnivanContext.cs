@@ -19,10 +19,13 @@ namespace Univan.Infrastructure.Persistence.Context
             base.OnModelCreating(builder);
             builder.Entity<Student>(new StudentMap().Configure);
             builder.Entity<Driver>(new DriverMap().Configure);
+            
             builder.Entity<User>().UseTptMappingStrategy();
-
             builder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             builder.Entity<User>().HasIndex(u => u.Cpf).IsUnique();
+
+            builder.Entity<Vehicle>(new VehicleMap().Configure);
+            builder.Entity<Driver>().HasOne<Vehicle>(d => d.Vehicle).WithOne(v => v.Driver).HasForeignKey<Driver>(d => d.VehicleId);
         }
     }
 }

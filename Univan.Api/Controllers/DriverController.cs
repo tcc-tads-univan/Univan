@@ -44,5 +44,12 @@ namespace Univan.Api.Controllers
 
             return ProblemDetails(result.Errors);
         }
+
+        [HttpPost]
+        [Route("{driverId}/vehicle")]
+        public async Task<IActionResult> CreateDriverVehicle(CreateVehicleRequest request)
+        {
+            return StatusCode(StatusCodes.Status201Created);
+        }
     }
 }
