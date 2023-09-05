@@ -23,6 +23,7 @@ namespace Univan.Api.MapperConfiguration
             config.NewConfig<DriverResult, DriverResponse>();
 
             config.NewConfig<CreateVehicleRequest, CreateVehicleCommand>();
+            config.NewConfig<VehicleResult, VehicleResponse>();
         }
 
     }

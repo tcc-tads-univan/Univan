@@ -6,6 +6,7 @@ using Univan.Api.Contracts.Driver;
 using Univan.Application.Services.Driver.Command.CreateDriver;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
 using Univan.Application.Services.Driver.Queries.GetDriverById;
+using Univan.Application.Services.Driver.Queries.GetVehicleById;
 
 namespace Univan.Api.Controllers
 {
@@ -57,6 +58,20 @@ namespace Univan.Api.Controllers
             if (result.IsSuccess)
             {
                 return StatusCode(StatusCodes.Status201Created);
+            }
+
+            return ProblemDetails(result.Errors);
+        } 
+        
+        [HttpGet]
+        [Route("{driverId}/vehicle/{vehicleId}")]
+        public async Task<IActionResult> CreateDriverVehicle(int driverId, int vehicleId)
+        {
+            var query = new GetVehicleByIdQuery(driverId, vehicleId);
+            var result = await _mediator.Send(query);
+            if (result.IsSuccess)
+            {
+                return Ok(_mapper.Map<VehicleResponse>(result.Value));
             }
 
             return ProblemDetails(result.Errors);
