@@ -8,7 +8,7 @@ namespace Univan.Infrastructure.Persistence.Context
         public UnivanContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<UnivanContext>();
-            optionsBuilder.UseSqlServer("Server=tcp:tccunivanfinal.database.windows.net,1433;Initial Catalog=univan;Persist Security Info=False;User ID=tccunivan;Password=Project!123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\carpool; Integrated Security=true; Initial Catalog=Univan;");
             return new UnivanContext(optionsBuilder.Options);
         }
     }

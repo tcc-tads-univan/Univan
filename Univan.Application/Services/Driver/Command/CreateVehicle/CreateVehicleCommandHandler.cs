@@ -1,13 +1,41 @@
 ﻿using FluentResults;
 using MediatR;
+using Univan.Application.Validation;
+using Univan.Domain.Entities;
+using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Driver.Command.CreateVehicle
 {
     public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand, Result>
     {
-        public Task<Result> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
+        private readonly IDriverRepository _driverRepository;
+        public CreateVehicleCommandHandler(IDriverRepository driverRepository)
         {
-            throw new NotImplementedException();
+            _driverRepository = driverRepository;
+        }
+
+        public async Task<Result> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
+        {
+            var driver = await _driverRepository.GetUserById(request.DriverId);
+
+            if(driver is null)
+            {
+                return Result.Fail(ValidationErrors.Driver.NotFound);
+            }
+
+            Vehicle vehicle = new Vehicle()
+            {
+                Model = request.Model,
+                FabricationYear = request.FabricationYear,
+                Plate = request.Plate,
+                Seats = request.Seats
+            };
+
+            driver.Vehicle = vehicle;
+
+            await _driverRepository.SaveChanges();
+
+            return Result.Ok();
         }
     }
 }

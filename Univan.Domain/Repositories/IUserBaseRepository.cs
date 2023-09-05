@@ -4,5 +4,7 @@
     {
         Task SaveUserAsync(T user);
         Task<T> GetUserById(int userId);
+        Task UpdateUser(T user);
+        Task SaveChanges();
     }
 }

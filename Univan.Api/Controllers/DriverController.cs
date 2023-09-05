@@ -1,8 +1,10 @@
-﻿using MapsterMapper;
+﻿using Mapster;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Driver;
 using Univan.Application.Services.Driver.Command.CreateDriver;
+using Univan.Application.Services.Driver.Command.CreateVehicle;
 using Univan.Application.Services.Driver.Queries.GetDriverById;
 
 namespace Univan.Api.Controllers
@@ -47,9 +49,17 @@ namespace Univan.Api.Controllers
 
         [HttpPost]
         [Route("{driverId}/vehicle")]
-        public async Task<IActionResult> CreateDriverVehicle(CreateVehicleRequest request)
+        public async Task<IActionResult> CreateDriverVehicle(int driverId, CreateVehicleRequest request)
         {
-            return StatusCode(StatusCodes.Status201Created);
+            var command = _mapper.Map<CreateVehicleCommand>(request);
+            command.DriverId = driverId;
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+
+            return ProblemDetails(result.Errors);
         }
     }
 }
