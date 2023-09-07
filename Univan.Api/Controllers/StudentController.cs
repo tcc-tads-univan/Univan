@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Student.Command.CreateStudent;
+using Univan.Application.Services.Student.Command.UpdateStudent;
 using Univan.Application.Services.Student.Queries.GetStudentById;
 
 namespace Univan.Api.Controllers
@@ -41,6 +42,21 @@ namespace Univan.Api.Controllers
             if (result.IsSuccess)
             {
                 return StatusCode(StatusCodes.Status201Created);
+            }
+
+            return ProblemDetails(result.Errors);
+        } 
+        
+        [HttpPut]
+        [Route("{studentId}")]
+        public async Task<IActionResult> UpdateStudent(int studentId, [FromForm] UpdateStudentRequest request)
+        {
+            var command = _mapper.Map<UpdateStudentCommand>(request);
+            command.Id = studentId;
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
             }
 
             return ProblemDetails(result.Errors);

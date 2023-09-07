@@ -3,10 +3,13 @@ using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Driver;
+using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Driver.Command.CreateDriver;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
+using Univan.Application.Services.Driver.Command.UpdateDriver;
 using Univan.Application.Services.Driver.Queries.GetDriverById;
 using Univan.Application.Services.Driver.Queries.GetVehicleById;
+using Univan.Application.Services.Student.Command.UpdateStudent;
 
 namespace Univan.Api.Controllers
 {
@@ -21,6 +24,34 @@ namespace Univan.Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateDriver([FromForm] CreateDriverRequest request)
+        {
+            var command = _mapper.Map<CreateDriverCommand>(request);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpPut]
+        [Route("{driverId}")]
+        public async Task<IActionResult> UpdateDriver(int driverId, [FromForm] UpdateDriverRequest request)
+        {
+            var command = _mapper.Map<UpdateDriverCommand>(request);
+            command.Id = driverId;
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
         [HttpGet]
         [Route("{driverId}")]
         public async Task<IActionResult> GetDriverById(int driverId)
@@ -30,19 +61,6 @@ namespace Univan.Api.Controllers
             if (result.IsSuccess)
             {
                 return Ok(_mapper.Map<DriverResponse>(result.Value));
-            }
-
-            return ProblemDetails(result.Errors);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateDriver([FromForm] CreateDriverRequest request)
-        {
-            var command = _mapper.Map<CreateDriverCommand>(request);
-            var result = await _mediator.Send(command);
-            if (result.IsSuccess)
-            {
-                return StatusCode(StatusCodes.Status201Created);
             }
 
             return ProblemDetails(result.Errors);
@@ -76,5 +94,6 @@ namespace Univan.Api.Controllers
 
             return ProblemDetails(result.Errors);
         }
+
     }
 }

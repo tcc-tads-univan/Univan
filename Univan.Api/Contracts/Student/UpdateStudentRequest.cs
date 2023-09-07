@@ -2,7 +2,7 @@
 
 namespace Univan.Api.Contracts.Student
 {
-    public class CreateStudentRequest : UserCreateRequest
+    public class UpdateStudentRequest : UserUpdateRequest
     {
     }
 }

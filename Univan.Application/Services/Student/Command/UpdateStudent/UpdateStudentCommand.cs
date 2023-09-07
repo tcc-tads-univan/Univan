@@ -1,15 +1,15 @@
 ﻿using FluentResults;
 using MediatR;
+using Univan.Application.Services.Common;
 
 namespace Univan.Application.Services.Student.Command.UpdateStudent
 {
-    public class UpdateStudentCommand : IRequest<Result>
+    public class UpdateStudentCommand : UserUpdateBaseCommand, IRequest<Result>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime Birthday { get; set; }
+        public UpdateStudentCommand(int id, string name, string password, string phoneNumber, DateTime birthdate, Stream photo) 
+            : base(id, name, password, phoneNumber, birthdate, photo)
+        {
+           
+        }
     }
 }

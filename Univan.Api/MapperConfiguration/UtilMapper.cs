@@ -5,7 +5,7 @@ namespace Univan.Api.MapperConfiguration
     public static class UtilMapper
     {
         private static Regex regex = new Regex(@"[^\d]");
-        public static string FormatCpf(string cpf)
+        public static string CleanCpf(string cpf)
         {
             return regex.Replace(cpf, "");
         }
@@ -14,7 +14,7 @@ namespace Univan.Api.MapperConfiguration
             return regex.Replace(phoneNumber, "");
         } 
         
-        public static string FormatCnh(string cnh)
+        public static string CleanCnh(string cnh)
         {
             return regex.Replace(cnh, "");
         }

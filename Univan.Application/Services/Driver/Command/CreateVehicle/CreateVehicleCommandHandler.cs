@@ -33,7 +33,7 @@ namespace Univan.Application.Services.Driver.Command.CreateVehicle
 
             driver.Vehicle = vehicle;
 
-            await _driverRepository.SaveChanges();
+            await _driverRepository.SaveUserChanges();
 
             return Result.Ok();
         }

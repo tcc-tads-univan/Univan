@@ -17,7 +17,7 @@ namespace Univan.Infrastructure.Persistence.Repository
             return await _dbContext.User.OfType<T>().FirstOrDefaultAsync(u => u.Id == userId);
         }
 
-        public async Task SaveChanges()
+        public async Task SaveUserChanges()
         {
             await _dbContext.SaveChangesAsync();
         }
@@ -28,10 +28,9 @@ namespace Univan.Infrastructure.Persistence.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateUser(T user)
+        public async Task UpdateUser(T oldUser, T newUser)
         {
-            var oldUser = await _dbContext.User.OfType<T>().FirstOrDefaultAsync(u => u.Id == user.Id);
-            _dbContext.Entry(oldUser).CurrentValues.SetValues(user);
+            _dbContext.Entry(oldUser).CurrentValues.SetValues(newUser);
             await _dbContext.SaveChangesAsync();
         }
     }

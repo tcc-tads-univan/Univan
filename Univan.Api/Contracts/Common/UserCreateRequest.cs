@@ -1,6 +1,6 @@
 ﻿namespace Univan.Api.Contracts.Common
 {
-    public class UserRequest
+    public abstract class UserCreateRequest
     {
         public string Name { get; set; }
         public string Email { get; set; }
