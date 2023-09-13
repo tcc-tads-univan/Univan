@@ -24,6 +24,8 @@ namespace Univan.Api.MapperConfiguration
                 UtilMapper.GetPictureValue(src.ProfilePicture)));
 
             config.NewConfig<DriverResult, DriverResponse>();
+            
+            config.NewConfig<DriverBasicResult, DriverBasicResponse>();
 
             config.NewConfig<CreateVehicleRequest, CreateVehicleCommand>();
             config.NewConfig<VehicleResult, VehicleResponse>();

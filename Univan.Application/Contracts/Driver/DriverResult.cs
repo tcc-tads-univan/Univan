@@ -5,7 +5,6 @@ namespace Univan.Application.Contracts.Driver
     public class DriverResult : UserResult
     {
         public string Cnh { get; set; }
-        
-        //Van
-    }
+        public int? VehicleId { get; set; }
+    }   
 }

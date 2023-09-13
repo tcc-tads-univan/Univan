@@ -7,6 +7,7 @@ using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Driver.Command.CreateDriver;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
 using Univan.Application.Services.Driver.Command.UpdateDriver;
+using Univan.Application.Services.Driver.Queries.GetDriverBasicInfosById;
 using Univan.Application.Services.Driver.Queries.GetDriverById;
 using Univan.Application.Services.Driver.Queries.GetVehicleById;
 using Univan.Application.Services.Student.Command.UpdateStudent;
@@ -61,6 +62,20 @@ namespace Univan.Api.Controllers
             if (result.IsSuccess)
             {
                 return Ok(_mapper.Map<DriverResponse>(result.Value));
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpGet]
+        [Route("{driverId}/basic-infos")]
+        public async Task<IActionResult> GetDriverBasicInfos(int driverId)
+        {
+            var query = new GetDriverBasicInfosByIdQuery(driverId);
+            var result = await _mediator.Send(query);
+            if (result.IsSuccess)
+            {
+                return Ok(_mapper.Map<DriverBasicResponse>(result.Value));
             }
 
             return ProblemDetails(result.Errors);

@@ -33,7 +33,8 @@ namespace Univan.Application.Services.Driver.Queries.GetDriverById
                 Name = driver.Name,
                 PhoneNumber = driver.PhoneNumber,
                 PhotoUrl = driver.PhotoUrl,
-                Rating = driver.Rating
+                Rating = driver.Rating,
+                VehicleId = driver.VehicleId
             };
 
             return Result.Ok(driverResult);
