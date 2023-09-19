@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Student.Command.CreateStudent;
 using Univan.Application.Services.Student.Command.UpdateStudent;
+using Univan.Application.Services.Student.Queries.GetStudentBasicInfosById;
 using Univan.Application.Services.Student.Queries.GetStudentById;
 
 namespace Univan.Api.Controllers
@@ -28,6 +29,21 @@ namespace Univan.Api.Controllers
             if (result.IsSuccess)
             {
                 var student = _mapper.Map<StudentResponse>(result.Value);
+                return Ok(student);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpGet]
+        [Route("{studentId}/basic-infos")]
+        public async Task<IActionResult> GetStudentBasicInfos(int studentId)
+        {
+            var query = new GetStudentBasicInfosByIdQuery(studentId);
+            var result = await _mediator.Send(query);
+            if (result.IsSuccess)
+            {
+                var student = _mapper.Map<StudentBasicResponse>(result.Value);
                 return Ok(student);
             }
 

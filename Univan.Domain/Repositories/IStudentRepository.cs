@@ -5,5 +5,6 @@ namespace Univan.Domain.Repositories
     public interface IStudentRepository : IUserBaseRepository<Student>
     {
         //Specific methods of studentRepository
+        Task<Student> GetStudentBasicInfo(int studentId);
     }
 }

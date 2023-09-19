@@ -28,6 +28,8 @@ namespace Univan.Api.MapperConfiguration
                     UtilMapper.CleanPhone(src.PhoneNumber),
                     src.Birthdate,
                     UtilMapper.GetPictureValue(src.ProfilePicture)));
+
+            config.NewConfig<StudentBasicResult, StudentBasicResponse>();
         }
     }
 }
