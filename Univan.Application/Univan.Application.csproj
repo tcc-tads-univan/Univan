@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Contracts\Subscription\" />
     <Folder Include="Services\Driver\Event\" />
     <Folder Include="Services\Authentication\" />
     <Folder Include="Services\Student\Event\" />
-    <Folder Include="Services\Subscriber\" />
+    <Folder Include="Services\Subscriber\Event\" />
+    <Folder Include="Services\Subscriber\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
