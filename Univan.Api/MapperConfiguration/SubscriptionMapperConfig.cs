@@ -6,7 +6,6 @@ namespace Univan.Api.MapperConfiguration
     {
         public void Register(TypeAdapterConfig config)
         {
-            throw new NotImplementedException();
         }
     }
 }

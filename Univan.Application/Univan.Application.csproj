@@ -12,7 +12,6 @@
     <Folder Include="Services\Authentication\" />
     <Folder Include="Services\Student\Event\" />
     <Folder Include="Services\Subscriber\Event\" />
-    <Folder Include="Services\Subscriber\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
