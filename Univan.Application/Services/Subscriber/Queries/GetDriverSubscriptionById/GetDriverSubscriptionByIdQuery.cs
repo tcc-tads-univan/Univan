@@ -1,6 +1,10 @@
-﻿namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionById
+﻿using FluentResults;
+using MediatR;
+using Univan.Application.Contracts.Subscription;
+
+namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionById
 {
-    public class GetDriverSubscriptionByIdQuery
+    public class GetDriverSubscriptionByIdQuery : IRequest<Result<DriverStudentSubscriptionResult>>
     {
         public int DriverId { get; set; }
         public int SubscriptionId { get; set; }
