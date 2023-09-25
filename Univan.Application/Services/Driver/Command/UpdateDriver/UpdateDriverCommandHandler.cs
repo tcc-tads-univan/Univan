@@ -26,7 +26,7 @@ namespace Univan.Application.Services.Driver.Command.UpdateDriver
 
             if(driver is null)
             {
-                return Result.Fail(ValidationErrors.Driver.DriverNotFound);
+                return Result.Fail(ValidationErrors.Driver.NotFound);
             }
 
             if (!String.IsNullOrEmpty(request.Password))

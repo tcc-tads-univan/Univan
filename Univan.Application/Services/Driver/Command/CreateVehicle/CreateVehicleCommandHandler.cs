@@ -20,7 +20,7 @@ namespace Univan.Application.Services.Driver.Command.CreateVehicle
 
             if(driver is null)
             {
-                return Result.Fail(ValidationErrors.Driver.DriverNotFound);
+                return Result.Fail(ValidationErrors.Driver.NotFound);
             }
 
             Vehicle vehicle = new Vehicle()
