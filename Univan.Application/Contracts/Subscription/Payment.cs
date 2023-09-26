@@ -2,7 +2,7 @@
 
 namespace Univan.Application.Contracts.Subscription
 {
-    public class PaymentResult
+    public class Payment
     {
         public DateTime Date { get; set; }
         public decimal Value { get; set; }

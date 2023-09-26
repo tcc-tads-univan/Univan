@@ -2,7 +2,7 @@
 
 namespace Univan.Application.Contracts.Subscription
 {
-    public class DriverStudentsResult
+    public class DriverStudents
     {
         public int SubscriptionId { get; set; }
         public string Name { get; set; }

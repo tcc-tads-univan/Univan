@@ -29,7 +29,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionBy
                 Name = "Mateus",
                 Phone = "123",
                 FinalAddress = "123",
-                Payment = new PaymentResult()
+                Payment = new Payment()
                 {
                     Date = DateTime.Now,
                     Status = PaymentStatus.PAID,

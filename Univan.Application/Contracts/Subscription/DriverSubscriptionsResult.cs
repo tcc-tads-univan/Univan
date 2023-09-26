@@ -3,6 +3,6 @@
     public class DriverSubscriptionsResult
     {
         public int FreeSeats { get; set; }
-        public List<DriverStudentsResult> Students { get; set; }
+        public List<DriverStudents> Students { get; set; }
     }
 }

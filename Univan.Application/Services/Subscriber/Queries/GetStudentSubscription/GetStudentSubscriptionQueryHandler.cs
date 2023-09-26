@@ -19,7 +19,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetStudentSubscription
              *  Include(Payments)
              */
 
-            if(studentSubscription is null)
+            if(studentSubscription is null) //Student null? change message
             {
                 return Result.Fail(ValidationErrors.Subscription.StudentSubscriptionNotFound);
             }
@@ -29,9 +29,9 @@ namespace Univan.Application.Services.Subscriber.Queries.GetStudentSubscription
                 DriverName = "Bla",
                 DriverPhone = "Bla",
                 VehiclePlate = "AS",
-                Payments = new List<PaymentResult>()
+                Payments = new List<Payment>()
                 {
-                    new PaymentResult()
+                    new Payment()
                     {
                         Date = DateTime.Now,
                         Status = PaymentStatus.PENDING,

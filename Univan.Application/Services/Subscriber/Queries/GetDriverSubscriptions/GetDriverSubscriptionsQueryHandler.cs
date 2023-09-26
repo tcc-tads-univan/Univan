@@ -18,7 +18,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
              *  Include(Tabela de GO/NOTGO) calcula o freeSeats
              */
 
-            if (driverSubscriptions is null)
+            if (driverSubscriptions is null) //Se motorista nao exisitr apenas
             {
                 return Result.Fail(ValidationErrors.Subscription.DriverSubscriptionNotFound);
             }
@@ -26,9 +26,9 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
             var result = new DriverSubscriptionsResult()
             {
                 FreeSeats = 2,
-                Students = new List<DriverStudentsResult>()
+                Students = new List<DriverStudents>()
                 {
-                    new DriverStudentsResult()
+                    new DriverStudents()
                     {
                         Name = "Mateus",
                         Situation = StudentSituation.GO,
