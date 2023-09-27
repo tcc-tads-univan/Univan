@@ -1,30 +1,29 @@
 ﻿using FluentResults;
 using MediatR;
 using Univan.Application.Contracts.Subscription;
+using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Subscriber.Queries.GetStudentPendingSubscriptions
 {
     public class GetStudentPendingSubscriptionsQueryHandler : IRequestHandler<GetStudentPendingSubscriptionsQuery, Result<List<StudentPendingSubscriptionsResult>>>
     {
+        private readonly IStudentRepository _studentRepository;
+        public GetStudentPendingSubscriptionsQueryHandler(IStudentRepository studentRepository)
+        {
+            _studentRepository = studentRepository; 
+        }
+
         public async Task<Result<List<StudentPendingSubscriptionsResult>>> Handle(GetStudentPendingSubscriptionsQuery request, CancellationToken cancellationToken)
         {
-            StudentPendingSubscriptionsResult pendingSubscriptions = null;
-            //var pendingSubscriptions = _subscriptionRepository.GetStudentPendingSubscription(request.StudentId);
+            var pendingSubscriptions = await _studentRepository.GetPendingSubscription(request.StudentId);
 
-            /*
-             *  select for subscription table by studentId and pending status. Lista de subscription
-             */
-
-            var result = new List<StudentPendingSubscriptionsResult>()
+            var result = pendingSubscriptions.Select(ps => new StudentPendingSubscriptionsResult()
             {
-                new StudentPendingSubscriptionsResult()
-                {
-                    DriverName = "Teste",
-                    DriverPhone = "Teste",
-                    ExpirationDay = 12,
-                    MonthlyFee = 213.23M
-                }
-            };
+                DriverName = ps.Driver.Name,
+                DriverPhone = ps.Driver.PhoneNumber,
+                ExpirationDay = ps.ExpirationDay,
+                MonthlyFee = ps.MonthlyFee
+            }).ToList();
 
             return Result.Ok(result);
         }

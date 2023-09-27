@@ -10,7 +10,7 @@
         public int ExpirationDay { get; set; }
         public decimal MonthlyFee { get; set; }
         public string Status { get; set; }
-        public virtual List<SubscriptionHistory> History { get; set; }
+        public virtual List<SubscriptionHistory> SubscriptionHistory { get; set; }
 
     }
 }

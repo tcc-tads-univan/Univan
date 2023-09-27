@@ -6,5 +6,7 @@ namespace Univan.Domain.Repositories
     {
         Task<Vehicle> GetDriverVehicle(int driverId, int vehicleId);
         Task<Driver> GetDriverBasicInfo(int driverId);
+        Task<IEnumerable<Subscription>> GetSubscriptions(int driverId);
+        Task<Subscription> GetSubscriptionById(int driverId, int subscriptionId);
     }
 }
