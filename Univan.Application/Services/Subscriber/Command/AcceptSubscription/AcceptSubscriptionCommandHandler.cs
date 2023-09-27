@@ -2,23 +2,29 @@
 using MediatR;
 using Univan.Application.Validation;
 using Univan.Domain.Enums;
+using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Subscriber.Command.AcceptSubscription
 {
     public class AcceptSubscriptionCommandHandler : IRequestHandler<AcceptSubscriptionCommand, Result>
     {
+        private readonly ISubscriptionRepository _subscriptionRepository;
+        public AcceptSubscriptionCommandHandler(ISubscriptionRepository subscriptionRepository)
+        {
+            _subscriptionRepository = subscriptionRepository;
+        }
         public async Task<Result> Handle(AcceptSubscriptionCommand request, CancellationToken cancellationToken)
         {
-            Object subscription = null;
-            //var subscription = _subscriptionRepository.GetSubscriptionById(request.SubscriptionId);
+            var subscription = await _subscriptionRepository.GetPendingSubscriptionById(request.SubscriptionId);
+
             if (subscription == null)
             {
                 return Result.Fail(ValidationErrors.Subscription.SubscriptionNotFound);
             }
 
-            //subscription.Status = SubscriptionStatus.ACTIVE;
+            subscription.Status = nameof(SubscriptionStatus.ACTIVE);
 
-            //_subscriptionRepository.SaveSubscription();
+            await _subscriptionRepository.SaveSubscription();
 
             return Result.Ok();
         }

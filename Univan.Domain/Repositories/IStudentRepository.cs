@@ -6,5 +6,7 @@ namespace Univan.Domain.Repositories
     {
         //Specific methods of studentRepository
         Task<Student> GetStudentBasicInfo(int studentId);
+        Task<IEnumerable<Subscription>> GetPendingSubscription(int studentId);
+        Task<Subscription> GetSubscription(int studentId);
     }
 }

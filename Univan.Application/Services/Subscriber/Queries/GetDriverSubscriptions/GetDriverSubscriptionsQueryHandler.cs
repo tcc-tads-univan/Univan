@@ -2,39 +2,42 @@
 using MediatR;
 using Univan.Application.Contracts.Subscription;
 using Univan.Application.Validation;
+using Univan.Domain.Entities;
 using Univan.Domain.Enums;
+using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
 {
     public class GetDriverSubscriptionsQueryHandler : IRequestHandler<GetDriverSubscriptionsQuery, Result<DriverSubscriptionsResult>>
     {
+        private readonly IDriverRepository _driverRepository;
+        public GetDriverSubscriptionsQueryHandler(IDriverRepository driverRepository)
+        {
+            _driverRepository = driverRepository;
+        }
         public async Task<Result<DriverSubscriptionsResult>> Handle(GetDriverSubscriptionsQuery request, CancellationToken cancellationToken)
         {
-            DriverSubscriptionsResult driverSubscriptions = null;
-            //var driverSubscriptions = _subscriptionRepository.GetDriverSubscription(request.DriverId);
+            var driverSubscriptions = await _driverRepository.GetSubscriptions(request.DriverId);
 
             /*
              *  select for subscription table by driverId. Lista de alunos
              *  Include(Tabela de GO/NOTGO) calcula o freeSeats
              */
 
-            if (driverSubscriptions is null) //Se motorista nao exisitr apenas
+            if (driverSubscriptions is null)
             {
                 return Result.Fail(ValidationErrors.Subscription.DriverSubscriptionNotFound);
             }
 
             var result = new DriverSubscriptionsResult()
             {
-                FreeSeats = 2,
-                Students = new List<DriverStudents>()
+                FreeSeats = 2, //Calculado dps
+                Students = driverSubscriptions.Select(ds => new DriverStudents()
                 {
-                    new DriverStudents()
-                    {
-                        Name = "Mateus",
-                        Situation = StudentSituation.GO,
-                        SubscriptionId = 1
-                    }
-                }
+                    Name = ds.Student.Name,
+                    SubscriptionId = ds.SubscriptionId,
+                    Situation = StudentSituation.GO
+                }).ToList()
             };
 
             return Result.Ok(result);

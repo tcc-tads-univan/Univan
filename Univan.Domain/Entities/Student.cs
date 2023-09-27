@@ -3,5 +3,6 @@
     public class Student : User
     {
         //Endereco?
+        public virtual Subscription Subscription { get; set; }
     }
 }
