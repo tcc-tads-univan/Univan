@@ -13,8 +13,6 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
             builder.Property(s => s.MonthlyFee).IsRequired().HasPrecision(7, 2);
             builder.Property(s => s.ExpirationDay).IsRequired();
             builder.Property(s => s.Status).IsRequired().HasMaxLength(32);
-            builder.Property(s => s.StudentId).IsRequired();
-            builder.Property(s => s.DriverId).IsRequired();
         }
     }
 }

@@ -34,8 +34,8 @@ namespace Univan.Infrastructure.Persistence.Context
 
             builder.Entity<Subscription>().HasMany<SubscriptionHistory>(s => s.SubscriptionHistory).WithOne(sh => sh.Subscription).HasForeignKey(sh => sh.SubscriptionId);
 
-            builder.Entity<Subscription>().HasOne<Driver>(s => s.Driver).WithMany(d => d.Subscriptions).HasForeignKey(s => s.DriverId);
-            builder.Entity<Subscription>().HasOne<Student>(s => s.Student).WithOne(d => d.Subscription).HasForeignKey<Subscription>(s => s.StudentId);
+            builder.Entity<Subscription>().HasOne<Driver>(s => s.Driver).WithMany(d => d.Subscriptions).HasForeignKey(s => s.DriverId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Subscription>().HasOne<Student>(s => s.Student).WithOne(d => d.Subscription).HasForeignKey<Subscription>(s => s.StudentId).OnDelete(DeleteBehavior.Restrict); ;
 
         }
     }

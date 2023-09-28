@@ -19,11 +19,6 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
         {
             var driverSubscriptions = await _driverRepository.GetSubscriptions(request.DriverId);
 
-            /*
-             *  select for subscription table by driverId. Lista de alunos
-             *  Include(Tabela de GO/NOTGO) calcula o freeSeats
-             */
-
             if (driverSubscriptions is null)
             {
                 return Result.Fail(ValidationErrors.Subscription.DriverSubscriptionNotFound);
@@ -31,16 +26,22 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
 
             var result = new DriverSubscriptionsResult()
             {
-                FreeSeats = 2, //Calculado dps
+                AvailableSeats = CalculateAvailableSeats(driverSubscriptions),
                 Students = driverSubscriptions.Select(ds => new DriverStudents()
                 {
                     Name = ds.Student.Name,
-                    SubscriptionId = ds.SubscriptionId,
-                    Situation = StudentSituation.GO
+                    SubscriptionId = ds.SubscriptionId
                 }).ToList()
             };
 
             return Result.Ok(result);
+        }
+
+        private int CalculateAvailableSeats(IEnumerable<Subscription> driverSubscriptions)
+        {
+            var totalVanSeats = driverSubscriptions.FirstOrDefault().Driver.Vehicle.Seats;
+            var totalSubscriptions = driverSubscriptions.Count();
+            return totalVanSeats - totalSubscriptions;
         }
     }
 }

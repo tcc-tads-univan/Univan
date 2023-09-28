@@ -2,7 +2,7 @@
 {
     public class DriverSubscriptionsResponse
     {
-        public int FreeSeats { get; set; }
+        public int AvailableSeats { get; set; }
         public List<DriverStudents> Students { get; set; }
 
         public class DriverStudents

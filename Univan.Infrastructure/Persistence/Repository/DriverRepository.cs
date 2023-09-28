@@ -4,6 +4,7 @@ using Univan.Domain.Enums;
 using Univan.Domain.Repositories;
 using Univan.Infrastructure.Persistence.Context;
 using Univan.Infrastructure.Persistence.Migrations;
+using Subscription = Univan.Domain.Entities.Subscription;
 
 namespace Univan.Infrastructure.Persistence.Repository
 {
@@ -37,6 +38,7 @@ namespace Univan.Infrastructure.Persistence.Repository
         {
             return await _dbContext.Set<Subscription>()
                 .Include(s => s.Student)
+                .Include(s => s.Driver.Vehicle)
                 .Where(s => s.DriverId == driverId && s.Status == nameof(SubscriptionStatus.ACTIVE)).ToListAsync();
         }
     }
