@@ -20,7 +20,7 @@ namespace Univan.Application.Services.Driver.Queries.GetDriverById
 
             if (driver is null)
             {
-                return Result.Fail(ValidationErrors.Driver.DriverNotFound);
+                return Result.Fail(ValidationErrors.Driver.NotFound);
             }
 
             var driverResult = new DriverResult()

@@ -17,6 +17,7 @@ namespace Univan.Infrastructure
         {
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IDriverRepository, DriverRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
             services.Configure<BlobSettings>(configuration.GetSection(BlobSettings.BlobSectionName));
             services.AddScoped<IBlobService, BlobService>();

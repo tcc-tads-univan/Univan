@@ -13,6 +13,8 @@ namespace Univan.Infrastructure.Persistence.Context
         public DbSet<Student> Student { get; set; }
         public DbSet<Driver> Driver { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Subscription> Subscription { get; set; }
+        public DbSet<SubscriptionHistory> SubscriptionHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +28,15 @@ namespace Univan.Infrastructure.Persistence.Context
 
             builder.Entity<Vehicle>(new VehicleMap().Configure);
             builder.Entity<Driver>().HasOne<Vehicle>(d => d.Vehicle).WithOne(v => v.Driver).HasForeignKey<Driver>(d => d.VehicleId);
+            
+            builder.Entity<Subscription>(new SubscriptionMap().Configure);
+            builder.Entity<SubscriptionHistory>(new SubscriptionHistoryMap().Configure);
+
+            builder.Entity<Subscription>().HasMany<SubscriptionHistory>(s => s.SubscriptionHistory).WithOne(sh => sh.Subscription).HasForeignKey(sh => sh.SubscriptionId);
+
+            builder.Entity<Subscription>().HasOne<Driver>(s => s.Driver).WithMany(d => d.Subscriptions).HasForeignKey(s => s.DriverId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Subscription>().HasOne<Student>(s => s.Student).WithOne(d => d.Subscription).HasForeignKey<Subscription>(s => s.StudentId).OnDelete(DeleteBehavior.Restrict); ;
+
         }
     }
 }
