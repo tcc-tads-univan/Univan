@@ -19,7 +19,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
         {
             var driverSubscriptions = await _driverRepository.GetSubscriptions(request.DriverId);
 
-            if (driverSubscriptions is null)
+            if (driverSubscriptions is null || !driverSubscriptions.Any())
             {
                 return Result.Fail(ValidationErrors.Subscription.DriverSubscriptionNotFound);
             }
@@ -30,7 +30,8 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions
                 Students = driverSubscriptions.Select(ds => new DriverStudents()
                 {
                     Name = ds.Student.Name,
-                    SubscriptionId = ds.SubscriptionId
+                    SubscriptionId = ds.SubscriptionId,
+                    SubscriptionStatus = ds.Status
                 }).ToList()
             };
 

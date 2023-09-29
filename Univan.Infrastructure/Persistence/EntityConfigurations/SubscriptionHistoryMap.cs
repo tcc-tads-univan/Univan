@@ -9,7 +9,7 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<SubscriptionHistory> builder)
         {
             builder.ToTable("SubscriptionHistory");
-            builder.HasKey(s => s.SubscriptionId);
+            builder.HasKey(s => s.SubscriptionHistoryId);
             builder.Property(s => s.PaymentStatus).IsRequired().HasMaxLength(32);
             builder.Property(s => s.PaymentDate);
             builder.Property(s => s.Value).IsRequired().HasPrecision(7,2);

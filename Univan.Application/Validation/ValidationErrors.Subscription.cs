@@ -7,8 +7,8 @@ namespace Univan.Application.Validation
     {
         internal static class Subscription
         {
-            internal static Error StudentSubscriptionNotFound => new Error("Student subscription was not found.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
-            internal static Error DriverSubscriptionNotFound => new Error("Driver subscription was not found.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
+            internal static Error StudentSubscriptionNotFound => new Error("There is no subscription for this student.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
+            internal static Error DriverSubscriptionNotFound => new Error("The driver was not found or does not have students subscriptions.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
             internal static Error SubscriptionNotFound => new Error("Subscription was not found.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
         }
     }

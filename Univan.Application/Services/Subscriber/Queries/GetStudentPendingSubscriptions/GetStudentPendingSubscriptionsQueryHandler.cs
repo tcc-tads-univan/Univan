@@ -21,6 +21,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetStudentPendingSubscr
             {
                 DriverName = ps.Driver.Name,
                 DriverPhone = ps.Driver.PhoneNumber,
+                DriverPhoto = ps.Driver.PhotoUrl,
                 ExpirationDay = ps.ExpirationDay,
                 MonthlyFee = ps.MonthlyFee
             }).ToList();

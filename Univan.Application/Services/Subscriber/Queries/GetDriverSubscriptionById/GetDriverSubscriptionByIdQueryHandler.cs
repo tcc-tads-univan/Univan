@@ -29,21 +29,24 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionBy
             {
                 Name = driverStudentSubscription.Student?.Name,
                 Phone = driverStudentSubscription.Student?.PhoneNumber,
+                SubscriptionStatus = driverStudentSubscription.Status,
                 FinalAddress = "SEM AINDA",
-                Payment = driverStudentSubscription.SubscriptionHistory.FirstOrDefault() is not null ? 
-                    MapPayment(driverStudentSubscription.SubscriptionHistory.FirstOrDefault()) : null
+                Payment = driverStudentSubscription.SubscriptionHistory.Any() ? 
+                    MapPayment(driverStudentSubscription.SubscriptionHistory
+                    .OrderByDescending(s => s.SubscriptionHistoryId)
+                    .FirstOrDefault()) : null
             };
 
             return Result.Ok(result);
         }
 
-        private Payment MapPayment(SubscriptionHistory subscriptionHistory)
+        private Payment MapPayment(SubscriptionHistory subHistory)
         {
             return new Payment()
             {
-                Date = subscriptionHistory.PaymentDate.Value,
-                Value = subscriptionHistory.Value,
-                Status = (PaymentStatus)Enum.Parse(typeof(PaymentStatus), subscriptionHistory.PaymentStatus)
+                Date = subHistory.PaymentDate.HasValue ? subHistory.PaymentDate.Value.Date : null,
+                Value = subHistory.Value,
+                Status = (PaymentStatus)Enum.Parse(typeof(PaymentStatus), subHistory.PaymentStatus)
             };
         }
     }

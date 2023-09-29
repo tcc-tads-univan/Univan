@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Univan.Domain.Entities;
 using Univan.Domain.Enums;
 using Univan.Domain.Repositories;
@@ -36,10 +37,16 @@ namespace Univan.Infrastructure.Persistence.Repository
 
         public async Task<IEnumerable<Subscription>> GetSubscriptions(int driverId)
         {
+            var statusList = new List<string>() 
+            { 
+                nameof(SubscriptionStatus.ACTIVE),
+                nameof(SubscriptionStatus.PENDING) 
+            };
+
             return await _dbContext.Set<Subscription>()
                 .Include(s => s.Student)
                 .Include(s => s.Driver.Vehicle)
-                .Where(s => s.DriverId == driverId && s.Status == nameof(SubscriptionStatus.ACTIVE)).ToListAsync();
+                .Where(s => s.DriverId == driverId && statusList.Contains(s.Status)).ToListAsync();
         }
     }
 }

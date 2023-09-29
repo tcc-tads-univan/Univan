@@ -6,5 +6,6 @@ namespace Univan.Application.Contracts.Subscription
     {
         public int SubscriptionId { get; set; }
         public string Name { get; set; }
+        public string SubscriptionStatus { get; set; }
     }
 }

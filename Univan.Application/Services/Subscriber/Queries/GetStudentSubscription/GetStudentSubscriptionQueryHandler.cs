@@ -28,9 +28,9 @@ namespace Univan.Application.Services.Subscriber.Queries.GetStudentSubscription
                 DriverName = studentSubscription.Driver.Name,
                 DriverPhone = studentSubscription.Driver.PhoneNumber,
                 VehiclePlate = studentSubscription.Driver.Vehicle.Plate,
-                Payments = studentSubscription.SubscriptionHistory.Select(sh => new Payment()
+                Payments = studentSubscription.SubscriptionHistory.OrderByDescending(s => s.SubscriptionHistoryId).Select(sh => new Payment()
                 {
-                    Date = sh.PaymentDate.Value,
+                    Date = sh.PaymentDate.HasValue ? sh.PaymentDate.Value.Date : null,
                     Status = (PaymentStatus)Enum.Parse(typeof(PaymentStatus), sh.PaymentStatus),
                     Value = sh.Value
                 }).ToList()
