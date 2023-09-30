@@ -27,11 +27,5 @@ namespace Univan.Infrastructure.Persistence.Repository
             await _dbContext.AddAsync(user);
             await _dbContext.SaveChangesAsync();
         }
-
-        public async Task UpdateUser(T oldUser, T newUser)
-        {
-            _dbContext.Entry(oldUser).CurrentValues.SetValues(newUser);
-            await _dbContext.SaveChangesAsync();
-        }
     }
 }

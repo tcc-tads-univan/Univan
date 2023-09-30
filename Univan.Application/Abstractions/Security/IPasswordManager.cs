@@ -3,6 +3,6 @@
     public interface IPasswordManager
     {
         string HashPassword(string password);
-        bool VerifyPassword(string textPassword, string hashPassword);
+        bool IsValidPassword(string textPassword, string hashPassword);
     }
 }

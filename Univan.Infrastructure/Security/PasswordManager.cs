@@ -11,7 +11,7 @@ namespace Univan.Infrastructure.Security
            return BCrypt.Net.BCrypt.EnhancedHashPassword(password, Iterations);
         }
 
-        public bool VerifyPassword(string textPassword, string hashPassword)
+        public bool IsValidPassword(string textPassword, string hashPassword)
         {
             return BCrypt.Net.BCrypt.EnhancedVerify(textPassword, hashPassword);
         }

@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Univan.Domain.Entities;
 using Univan.Domain.Enums;
 using Univan.Domain.Repositories;
 using Univan.Infrastructure.Persistence.Context;
-using Univan.Infrastructure.Persistence.Migrations;
-using Subscription = Univan.Domain.Entities.Subscription;
 
 namespace Univan.Infrastructure.Persistence.Repository
 {
