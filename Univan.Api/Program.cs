@@ -38,8 +38,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors(ionicFrontend);
 
 app.UseAuthorization();
