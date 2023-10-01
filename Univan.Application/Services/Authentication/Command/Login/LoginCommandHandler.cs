@@ -4,6 +4,7 @@ using Univan.Application.Abstractions.Security;
 using Univan.Application.Contracts.Authentication;
 using Univan.Application.Validation;
 using Univan.Domain.Entities;
+using Univan.Domain.Enums;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Authentication.Command.Login
@@ -40,10 +41,16 @@ namespace Univan.Application.Services.Authentication.Command.Login
             {
                 Name = user.Name,
                 UserId = user.Id,
+                UserType = GetUserType(user),
                 Token = token
             };
 
             return Result.Ok(result);
+        }
+
+        private UserType GetUserType(User user)
+        {
+            return user.GetType().GetProperty("VehicleId") != null ? UserType.DRIVER : UserType.STUDENT;
         }
     }
 }
