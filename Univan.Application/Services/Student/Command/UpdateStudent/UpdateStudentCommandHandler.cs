@@ -21,7 +21,7 @@ namespace Univan.Application.Services.Student.Command.UpdateStudent
         }
         public async Task<Result> Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
         {
-            var student = await _studentRepository.GetUserById(2);
+            var student = await _studentRepository.GetUserById(request.Id);
             
             if(student is null)
             {
