@@ -2,7 +2,8 @@
 {
     public class Student : User
     {
-        //Endereco?
-        public virtual Subscription Subscription { get; set; }
+        public Address Address { get; set; }
+        public int? AddressId { get; set; }
+        public Subscription Subscription { get; set; }
     }
 }

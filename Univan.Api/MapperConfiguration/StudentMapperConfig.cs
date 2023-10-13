@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using Univan.Api.Contracts.Student;
 using Univan.Application.Contracts.Student;
+using Univan.Application.Services.Student.Command.CreateAddress;
 using Univan.Application.Services.Student.Command.CreateStudent;
 using Univan.Application.Services.Student.Command.UpdateStudent;
 
@@ -30,6 +31,9 @@ namespace Univan.Api.MapperConfiguration
                     UtilMapper.GetPictureValue(src.ProfilePicture)));
 
             config.NewConfig<StudentBasicResult, StudentBasicResponse>();
+            config.NewConfig<CreateAddressRequest, CreateAddressCommand>();
+
+            config.NewConfig<StudentAddressResult, StudentAddressResponse>();
         }
     }
 }

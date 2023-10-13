@@ -14,11 +14,23 @@ namespace Univan.Infrastructure.Persistence.Repository
             _dbContext = context;
         }
 
+        public async Task DeleteStudentAddress(int studentId, int addressId)
+        {
+            var address = await _dbContext.Set<Address>().FirstOrDefaultAsync(a => a.Student.Id == studentId && a.Id == addressId);
+            _dbContext.Set<Address>().Remove(address);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Subscription>> GetPendingSubscription(int studentId)
         {
             return await _dbContext.Set<Subscription>()
                 .Include(s => s.Driver)
                 .Where(s => s.StudentId == studentId && s.Status == nameof(SubscriptionStatus.PENDING)).ToListAsync();
+        }
+
+        public Task<Address> GetStudentAddress(int studentId, int addressId)
+        {
+            return _dbContext.Set<Address>().FirstOrDefaultAsync(a => a.Id == addressId && a.Student.Id == studentId);
         }
 
         public Task<Student> GetStudentBasicInfo(int studentId)
