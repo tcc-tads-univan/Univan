@@ -6,6 +6,7 @@ using Univan.Api.Contracts.Driver;
 using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Driver.Command.CreateDriver;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
+using Univan.Application.Services.Driver.Command.DeleteVehicle;
 using Univan.Application.Services.Driver.Command.UpdateDriver;
 using Univan.Application.Services.Driver.Queries.GetDriverBasicInfosById;
 using Univan.Application.Services.Driver.Queries.GetDriverById;
@@ -98,13 +99,27 @@ namespace Univan.Api.Controllers
         
         [HttpGet]
         [Route("{driverId}/vehicle/{vehicleId}")]
-        public async Task<IActionResult> CreateDriverVehicle(int driverId, int vehicleId)
+        public async Task<IActionResult> GetDriverVehicle(int driverId, int vehicleId)
         {
             var query = new GetVehicleByIdQuery(driverId, vehicleId);
             var result = await _mediator.Send(query);
             if (result.IsSuccess)
             {
                 return Ok(_mapper.Map<VehicleResponse>(result.Value));
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpDelete]
+        [Route("{driverId}/vehicle/{vehicleId}")]
+        public async Task<IActionResult> DeleteDriverVehicle(int driverId, int vehicleId)
+        {
+            var command = new DeleteVehicleCommand(driverId, vehicleId);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return NoContent();
             }
 
             return ProblemDetails(result.Errors);

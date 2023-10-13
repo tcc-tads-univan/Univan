@@ -36,6 +36,16 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
                 return Result.Fail(ValidationErrors.Driver.NotFound);
             }
 
+            if(!DriverHasVehicle(driver.VehicleId))
+            {
+                return Result.Fail(ValidationErrors.Driver.VehicleNotFound);
+            }
+
+            if(await HasAvailableSeats(driver.Id, driver.VehicleId.Value) == false)
+            {
+                return Result.Fail(ValidationErrors.Subscription.StudentsLimitation);
+            }
+
             var subscription = new Subscription()
             {
                 DriverId = driver.Id,
@@ -48,6 +58,17 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
             await _subscriptionRepository.CreateSubscription(subscription);
 
             return Result.Ok();
+        }
+
+        private bool DriverHasVehicle(int? vehicleId)
+        {
+            return vehicleId.HasValue;
+        }
+        private async Task<bool> HasAvailableSeats(int driverId, int vehicleId)
+        {
+            var driverVehicle = await _driverRepository.GetDriverVehicle(driverId, vehicleId);
+            var driverSubs = await _driverRepository.GetSubscriptions(driverId);
+            return driverVehicle.Seats > driverSubs.Count();
         }
     }
 }
