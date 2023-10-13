@@ -6,7 +6,9 @@ using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
 using Univan.Application.Services.Student.Command.CreateAddress;
 using Univan.Application.Services.Student.Command.CreateStudent;
+using Univan.Application.Services.Student.Command.DeleteAddress;
 using Univan.Application.Services.Student.Command.UpdateStudent;
+using Univan.Application.Services.Student.Queries.GetStudentAddressById;
 using Univan.Application.Services.Student.Queries.GetStudentBasicInfosById;
 using Univan.Application.Services.Student.Queries.GetStudentById;
 
@@ -82,8 +84,8 @@ namespace Univan.Api.Controllers
         }
 
         [HttpPost]
-        [Route("{driverId}/address")]
-        public async Task<IActionResult> CreateDriverVehicle(int studentId, CreateAddressRequest request)
+        [Route("{studentId}/address")]
+        public async Task<IActionResult> CreateStudentAddress(int studentId, CreateAddressRequest request)
         {
             var command = _mapper.Map<CreateAddressCommand>(request);
             command.StudentId = studentId;
@@ -95,5 +97,36 @@ namespace Univan.Api.Controllers
 
             return ProblemDetails(result.Errors);
         }
+
+        [HttpGet]
+        [Route("{studentId}/address/{addressId}")]
+        public async Task<IActionResult> GetStudentAddress(int studentId, int addressId)
+        {
+            var query = new GetStudentAddressByIdQuery(studentId, addressId);
+            var result = await _mediator.Send(query);
+            if (result.IsSuccess)
+            {
+                var response = _mapper.Map<StudentAddressResponse>(result.Value);
+                return Ok(response);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpDelete]
+        [Route("{studentId}/address/{addressId}")]
+        public async Task<IActionResult> DeleteStudentAddress(int studentId, int addressId)
+        {
+            var command = new DeleteAddressCommand(studentId, addressId);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+
     }
 }

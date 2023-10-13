@@ -32,6 +32,8 @@ namespace Univan.Api.MapperConfiguration
 
             config.NewConfig<StudentBasicResult, StudentBasicResponse>();
             config.NewConfig<CreateAddressRequest, CreateAddressCommand>();
+
+            config.NewConfig<StudentAddressResult, StudentAddressResponse>();
         }
     }
 }

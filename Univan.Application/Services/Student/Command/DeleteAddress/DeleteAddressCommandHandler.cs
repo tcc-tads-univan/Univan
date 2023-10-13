@@ -19,6 +19,11 @@ namespace Univan.Application.Services.Student.Command.DeleteAddress
             if (student is null)
             {
                 return Result.Fail(ValidationErrors.Student.NotFound);
+            }      
+            
+            if (!student.AddressId.HasValue || student.AddressId.Value != request.AddressId)
+            {
+                return Result.Fail(ValidationErrors.Address.NotFound);
             }
 
             var subscription = await _studentRepository.GetSubscription(request.StudentId);

@@ -3,6 +3,6 @@
     public class StudentAddressResponse
     {
         public string CompleteLineAddress { get; set; }
-        public string PlaceId { get; set; }
+        public string GooglePlaceId { get; set; }
     }
 }
