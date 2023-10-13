@@ -1,7 +1,10 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Univan.Api.Contracts.Driver;
 using Univan.Api.Contracts.Student;
+using Univan.Application.Services.Driver.Command.CreateVehicle;
+using Univan.Application.Services.Student.Command.CreateAddress;
 using Univan.Application.Services.Student.Command.CreateStudent;
 using Univan.Application.Services.Student.Command.UpdateStudent;
 using Univan.Application.Services.Student.Queries.GetStudentBasicInfosById;
@@ -73,6 +76,21 @@ namespace Univan.Api.Controllers
             if (result.IsSuccess)
             {
                 return StatusCode(StatusCodes.Status204NoContent);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpPost]
+        [Route("{driverId}/address")]
+        public async Task<IActionResult> CreateDriverVehicle(int studentId, CreateAddressRequest request)
+        {
+            var command = _mapper.Map<CreateAddressCommand>(request);
+            command.StudentId = studentId;
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status201Created);
             }
 
             return ProblemDetails(result.Errors);

@@ -13,6 +13,8 @@ namespace Univan.Infrastructure.Persistence.Context
         public DbSet<Student> Student { get; set; }
         public DbSet<Driver> Driver { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<Address> Address { get; set; }
         public DbSet<Subscription> Subscription { get; set; }
         public DbSet<SubscriptionHistory> SubscriptionHistory { get; set; }
 
@@ -28,7 +30,10 @@ namespace Univan.Infrastructure.Persistence.Context
 
             builder.Entity<Vehicle>(new VehicleMap().Configure);
             builder.Entity<Driver>().HasOne<Vehicle>(d => d.Vehicle).WithOne(v => v.Driver).HasForeignKey<Driver>(d => d.VehicleId);
-            
+
+            builder.Entity<Address>(new AddressMap().Configure);
+            builder.Entity<Student>().HasOne<Address>(s => s.Address).WithOne(a => a.Student).HasForeignKey<Student>(s => s.AddressId);
+
             builder.Entity<Subscription>(new SubscriptionMap().Configure);
             builder.Entity<SubscriptionHistory>(new SubscriptionHistoryMap().Configure);
 
