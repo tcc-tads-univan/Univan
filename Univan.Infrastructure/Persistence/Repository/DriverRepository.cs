@@ -14,6 +14,13 @@ namespace Univan.Infrastructure.Persistence.Repository
             _dbContext = dbContext;
         }
 
+        public async Task DeleteDriverVehicle(int driverId, int vehicleId)
+        {
+            var vehicle = await _dbContext.Set<Vehicle>().FirstOrDefaultAsync(v => v.Driver.Id == driverId && v.Id == vehicleId);
+            _dbContext.Set<Vehicle>().Remove(vehicle);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public Task<Driver> GetDriverBasicInfo(int driverId)
         {
             return _dbContext.Set<Driver>().Include(u => u.Vehicle).FirstOrDefaultAsync(u => u.Id == driverId);

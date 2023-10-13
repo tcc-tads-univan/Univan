@@ -20,7 +20,7 @@ namespace Univan.Application.Services.Driver.Queries.GetVehicleById
 
             if(vehicle is null)
             {
-                return Result.Fail(ValidationErrors.Driver.VehicleNotFound);
+                return Result.Fail(ValidationErrors.Vehicle.NotFound);
             }
 
             VehicleResult vehicleResult = new VehicleResult()

@@ -20,7 +20,7 @@ namespace Univan.Application.Services.Subscriber.Command.DeclineSubscription
             
             if (subscription == null)
             {
-                return Result.Fail(ValidationErrors.Subscription.SubscriptionNotFound);
+                return Result.Fail(ValidationErrors.Subscription.NotFound);
             }
 
             subscription.Status = nameof(SubscriptionStatus.REFUSED);
