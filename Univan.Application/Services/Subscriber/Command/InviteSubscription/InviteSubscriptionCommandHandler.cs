@@ -22,40 +22,67 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
 
         public async Task<Result> Handle(InviteSubscriptionCommand request, CancellationToken cancellationToken)
         {
-            var student = await _studentRepository.GetUserById(request.StudentId);
-            
-            if(student is null)
+            var userValidation = await ValidateStudent(request.StudentId);
+
+            if (userValidation.IsFailed)
             {
-                return Result.Fail(ValidationErrors.Student.NotFound);
+                return Result.Fail(userValidation.Errors.FirstOrDefault());
             }
 
-            var driver = await _driverRepository.GetUserById(request.DriverId);
+            var driverValidation = await ValidateDriver(request.DriverId);
 
-            if(driver is null)
+            if (driverValidation.IsFailed)
             {
-                return Result.Fail(ValidationErrors.Driver.NotFound);
-            }
-
-            if(!DriverHasVehicle(driver.VehicleId))
-            {
-                return Result.Fail(ValidationErrors.Driver.VehicleNotFound);
-            }
-
-            if(await HasAvailableSeats(driver.Id, driver.VehicleId.Value) == false)
-            {
-                return Result.Fail(ValidationErrors.Subscription.StudentsLimitation);
+                return Result.Fail(driverValidation.Errors.FirstOrDefault());
             }
 
             var subscription = new Subscription()
             {
-                DriverId = driver.Id,
-                StudentId = student.Id,
+                DriverId = request.DriverId,
+                StudentId = request.StudentId,
                 MonthlyFee = request.MonthlyFee,
                 ExpirationDay = request.ExpirationDay,
                 Status = nameof(SubscriptionStatus.PENDING)
             };
 
             await _subscriptionRepository.CreateSubscription(subscription);
+
+            return Result.Ok();
+        }
+        private async Task<Result> ValidateStudent(int studentId)
+        {
+            var student = await _studentRepository.GetUserById(studentId);
+
+            if (student is null)
+            {
+                return Result.Fail(ValidationErrors.Student.NotFound);
+            }
+
+            if (await StudentHasSubscription(student.Id))
+            {
+                return Result.Fail(ValidationErrors.Student.AlreadyHasSubscription);
+            }
+
+            return Result.Ok();
+        }
+        private async Task<Result> ValidateDriver(int driverId)
+        {
+            var driver = await _driverRepository.GetUserById(driverId);
+
+            if (driver is null)
+            {
+                return Result.Fail(ValidationErrors.Driver.NotFound);
+            }
+
+            if (!DriverHasVehicle(driver.VehicleId))
+            {
+                return Result.Fail(ValidationErrors.Driver.VehicleNotFound);
+            }
+
+            if (await HasAvailableSeats(driver.Id, driver.VehicleId.Value) == false)
+            {
+                return Result.Fail(ValidationErrors.Subscription.StudentsLimitation);
+            }
 
             return Result.Ok();
         }
@@ -70,5 +97,11 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
             var driverSubs = await _driverRepository.GetSubscriptions(driverId);
             return driverVehicle.Seats > driverSubs.Count();
         }
+
+        private Task<bool> StudentHasSubscription(int studentId)
+        {
+            return _studentRepository.HasSubscription(studentId);
+        }
+
     }
 }

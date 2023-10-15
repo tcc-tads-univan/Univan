@@ -9,5 +9,6 @@ namespace Univan.Domain.Repositories
         Task<Subscription> GetSubscription(int studentId);
         Task DeleteStudentAddress(int studentId, int addressId);
         Task<Address> GetStudentAddress(int studentId, int addressId);
+        Task<bool> HasSubscription(int studentId);
     }
 }
