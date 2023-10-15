@@ -45,5 +45,10 @@ namespace Univan.Infrastructure.Persistence.Repository
                 .Include(s => s.SubscriptionHistory)
                 .FirstOrDefaultAsync(s => s.StudentId == studentId && s.Status == nameof(SubscriptionStatus.ACTIVE));
         }
+
+        public Task<bool> HasSubscription(int studentId)
+        {
+            return _dbContext.Set<Subscription>().AnyAsync(s => s.StudentId == studentId);
+        }
     }
 }
