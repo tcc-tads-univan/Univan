@@ -19,6 +19,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetStudentPendingSubscr
 
             var result = pendingSubscriptions.Select(ps => new StudentPendingSubscriptionsResult()
             {
+                SubscriptionId = ps.SubscriptionId,
                 DriverName = ps.Driver.Name,
                 DriverPhone = ps.Driver.PhoneNumber,
                 DriverPhoto = ps.Driver.PhotoUrl,

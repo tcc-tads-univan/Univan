@@ -23,9 +23,7 @@ namespace Univan.Application.Services.Subscriber.Command.DeclineSubscription
                 return Result.Fail(ValidationErrors.Subscription.NotFound);
             }
 
-            subscription.Status = nameof(SubscriptionStatus.REFUSED);
-
-            await _subscriptionRepository.SaveSubscription();
+            await _subscriptionRepository.RefuseSubscription(subscription);
 
             return Result.Ok();
         }

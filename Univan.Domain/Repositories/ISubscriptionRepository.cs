@@ -7,5 +7,6 @@ namespace Univan.Domain.Repositories
         Task CreateSubscription(Subscription subscription);
         Task<Subscription> GetPendingSubscriptionById(int subscriptionId);
         Task SaveSubscription();
+        Task RefuseSubscription(Subscription subscription);
     }
 }

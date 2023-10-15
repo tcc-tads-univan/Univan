@@ -2,6 +2,7 @@
 {
     public class StudentPendingSubscriptionsResponse
     {
+        public int SubscriptionId { get; set; }
         public string DriverName { get; set; }
         public string DriverPhone { get; set; }
         public string DriverPhoto { get; set; }

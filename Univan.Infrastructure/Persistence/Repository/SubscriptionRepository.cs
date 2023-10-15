@@ -26,6 +26,12 @@ namespace Univan.Infrastructure.Persistence.Repository
             return _dbContext.Set<Subscription>().FirstOrDefaultAsync(s => s.SubscriptionId == subscriptionId && s.Status == nameof(SubscriptionStatus.PENDING));
         }
 
+        public async Task RefuseSubscription(Subscription subscription)
+        {
+            _dbContext.Set<Subscription>().Remove(subscription);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task SaveSubscription()
         {
             await _dbContext.SaveChangesAsync();
