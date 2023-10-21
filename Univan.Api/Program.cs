@@ -1,4 +1,5 @@
 using Univan.Api;
+using Univan.Api.Extensions;
 using Univan.Api.Middleware;
 using Univan.Application;
 using Univan.Infrastructure;
@@ -15,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApi()
     .AddApplication()
     .AddInfrastructure(builder.Configuration);
+
+builder.Services.AddMassTransitDependency(builder.Configuration);
 
 var ionicFrontend = "IonicFrontend";
 builder.Services.AddCors(options =>

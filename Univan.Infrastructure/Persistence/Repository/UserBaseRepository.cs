@@ -27,5 +27,10 @@ namespace Univan.Infrastructure.Persistence.Repository
             await _dbContext.AddAsync(user);
             await _dbContext.SaveChangesAsync();
         }
+
+        public Task<bool> UserAlreadyExist(string cpf, string email)
+        {
+            return _dbContext.Set<User>().AnyAsync(u => u.Cpf == cpf || u.Email == email);
+        }
     }
 }
