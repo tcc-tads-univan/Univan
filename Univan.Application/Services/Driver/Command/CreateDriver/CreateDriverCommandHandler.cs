@@ -49,7 +49,7 @@ namespace Univan.Application.Services.Driver.Command.CreateDriver
 
             await _driverRepository.SaveUserAsync(driver);
 
-            await _mediator.Publish(new CreatedUserEvent(driver.Id, driver.Name, driver.Email));
+            await _mediator.Publish(new CreatedUserMessage(driver.Id, driver.Name, driver.Email));
 
             return Result.Ok();
         }

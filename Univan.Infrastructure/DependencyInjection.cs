@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Univan.Application.Abstractions.Messaging;
 using Univan.Application.Abstractions.Security;
 using Univan.Application.Abstractions.Storage;
 using Univan.Domain.Repositories;
+using Univan.Infrastructure.Messaging;
 using Univan.Infrastructure.Persistence.Context;
 using Univan.Infrastructure.Persistence.Repository;
 using Univan.Infrastructure.Security;
@@ -23,6 +25,7 @@ namespace Univan.Infrastructure
             services.Configure<BlobSettings>(configuration.GetSection(BlobSettings.BlobSectionName));
             services.AddScoped<IBlobService, BlobService>();
             services.AddScoped<IPasswordManager, PasswordManager>();
+            services.AddScoped<IMessageSender, MessageSender>();
 
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.JwtSectionName));
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();

@@ -2,9 +2,9 @@
 
 namespace Univan.Domain.Events
 {
-    public class DeclinedSubscriptionEvent : INotification
+    public class AcceptedSubscriptionMessage : INotification
     {
-        public DeclinedSubscriptionEvent(int driverId, int studentId)
+        public AcceptedSubscriptionMessage(int driverId, int studentId)
         {
             DriverId = driverId;
             StudentId = studentId;

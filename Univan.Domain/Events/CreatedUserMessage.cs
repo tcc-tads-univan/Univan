@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 
 namespace Univan.Domain.Events
 {
-    public class CreatedUserEvent : INotification
+    public class CreatedUserMessage : INotification
     {
-        public CreatedUserEvent(int userId, string name, string email)
+        public CreatedUserMessage(int userId, string name, string email)
         {
             UserId = userId;
             Name = name;

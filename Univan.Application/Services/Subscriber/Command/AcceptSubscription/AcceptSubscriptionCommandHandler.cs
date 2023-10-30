@@ -29,7 +29,7 @@ namespace Univan.Application.Services.Subscriber.Command.AcceptSubscription
 
             await _subscriptionRepository.SaveSubscription();
 
-            await _mediator.Publish(new AcceptedSubscriptionEvent(subscription.DriverId, subscription.StudentId));
+            await _mediator.Publish(new AcceptedSubscriptionMessage(subscription.DriverId, subscription.StudentId));
 
             return Result.Ok();
         }

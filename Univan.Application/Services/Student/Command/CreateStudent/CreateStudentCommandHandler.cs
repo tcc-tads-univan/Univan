@@ -45,7 +45,7 @@ namespace Univan.Application.Services.Student.Command.CreateStudent
             };
             await _studentRepository.SaveUserAsync(student);
 
-            await _mediator.Publish(new CreatedUserEvent(student.Id, student.Name, student.Email));
+            await _mediator.Publish(new CreatedUserMessage(student.Id, student.Name, student.Email));
 
             return Result.Ok();
         }

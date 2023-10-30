@@ -1,4 +1,6 @@
 ﻿using MassTransit;
+using RabbitMQ.Client;
+using SharedContracts.Events;
 
 namespace Univan.Api.Extensions
 {
@@ -12,6 +14,12 @@ namespace Univan.Api.Extensions
                 x.UsingRabbitMq((context, busFactoryConfigurator) =>
                 {
                     busFactoryConfigurator.Host(configuration.GetConnectionString("RabbitMq"));
+
+                    busFactoryConfigurator.Message<BaseUnivanEvent>(e => e.SetEntityName(BaseUnivanEvent.exchageName));
+                    busFactoryConfigurator.Publish<BaseUnivanEvent>(e => { 
+                        e.ExchangeType = ExchangeType.Direct; 
+                    });
+
                 });
             });
         }

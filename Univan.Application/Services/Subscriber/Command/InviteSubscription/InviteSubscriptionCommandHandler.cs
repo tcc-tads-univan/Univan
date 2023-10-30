@@ -50,7 +50,7 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
 
             await _subscriptionRepository.CreateSubscription(subscription);
 
-            await _mediator.Publish(new InviteSubscriptionEvent(subscription.DriverId, subscription.StudentId, subscription.MonthlyFee, subscription.ExpirationDay));
+            await _mediator.Publish(new InviteSubscriptionMessage(subscription.DriverId, subscription.StudentId, subscription.MonthlyFee, subscription.ExpirationDay));
 
             return Result.Ok();
         }

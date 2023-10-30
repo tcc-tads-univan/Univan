@@ -28,7 +28,7 @@ namespace Univan.Application.Services.Subscriber.Command.DeclineSubscription
 
             await _subscriptionRepository.RefuseSubscription(subscription);
 
-            await _mediator.Publish(new DeclinedSubscriptionEvent(subscription.DriverId, subscription.StudentId));
+            await _mediator.Publish(new DeclinedSubscriptionMessage(subscription.DriverId, subscription.StudentId));
 
             return Result.Ok();
         }
