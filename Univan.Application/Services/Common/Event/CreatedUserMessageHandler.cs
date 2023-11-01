@@ -1,30 +1,31 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using SharedContracts;
-using Univan.Application.Abstractions.Messaging;
 using Univan.Domain.Events;
 
 namespace Univan.Application.Services.Common.Event
 {
     public class CreatedUserMessageHandler : INotificationHandler<CreatedUserMessage>
     {
-        private readonly IMessageSender _messageSender;
+        private readonly IPublishEndpoint _publish;
         private readonly ILogger<CreatedUserMessageHandler> _logger;
-        public CreatedUserMessageHandler(IMessageSender messageSender, ILogger<CreatedUserMessageHandler> logger)
+        public CreatedUserMessageHandler(IPublishEndpoint publish, ILogger<CreatedUserMessageHandler> logger)
         {
-            _messageSender = messageSender;
+            _publish = publish;
             _logger = logger;
         }
 
         public async Task Handle(CreatedUserMessage notification, CancellationToken cancellationToken)
         {
-            CreatedUserEvent eventMessage = new CreatedUserEvent()
+            var eventMessage = new CreatedUserEvent()
             {
                 Email = notification.Email,
                 Name = notification.Name,
                 UserId = notification.UserId
             };
-            await _messageSender.SendEvent(eventMessage);
+
+            await _publish.Publish(eventMessage, ev => ev.SetRoutingKey(eventMessage.GetType().Name));
             _logger.LogInformation("CreatedUserEventHandler SENT!");
         }
     }
