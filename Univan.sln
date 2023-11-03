@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Univan.Api", "Univan.Api\Univan.Api.csproj", "{97A4682A-1B32-40F4-9557-0FA2B1E6645B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Univan.Api", "Univan.Api\Univan.Api.csproj", "{97A4682A-1B32-40F4-9557-0FA2B1E6645B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Univan.Application", "Univan.Application\Univan.Application.csproj", "{2A2ED834-7CD7-4E63-A0FD-AAE201384C91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Univan.Application", "Univan.Application\Univan.Application.csproj", "{2A2ED834-7CD7-4E63-A0FD-AAE201384C91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Univan.Domain", "Univan.Domain\Univan.Domain.csproj", "{D72B2023-EE99-448A-AED7-4C83902E629B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Univan.Domain", "Univan.Domain\Univan.Domain.csproj", "{D72B2023-EE99-448A-AED7-4C83902E629B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Univan.Infrastructure", "Univan.Infrastructure\Univan.Infrastructure.csproj", "{6B1C0AC8-45C4-46B7-9A86-EDF2FBB1700C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Univan.Infrastructure", "Univan.Infrastructure\Univan.Infrastructure.csproj", "{6B1C0AC8-45C4-46B7-9A86-EDF2FBB1700C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

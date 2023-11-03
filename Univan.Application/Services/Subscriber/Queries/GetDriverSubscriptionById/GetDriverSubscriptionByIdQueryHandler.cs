@@ -30,7 +30,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionBy
                 Name = driverStudentSubscription.Student?.Name,
                 Phone = driverStudentSubscription.Student?.PhoneNumber,
                 SubscriptionStatus = driverStudentSubscription.Status,
-                FinalAddress = "SEM AINDA",
+                FinalAddress = driverStudentSubscription.Student?.Address?.CompleteLineAddress,
                 Payment = driverStudentSubscription.SubscriptionHistory.Any() ? 
                     MapPayment(driverStudentSubscription.SubscriptionHistory
                     .OrderByDescending(s => s.SubscriptionHistoryId)

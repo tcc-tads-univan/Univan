@@ -4,6 +4,6 @@ namespace Univan.Application.Contracts.Student
 {
     public class StudentResult : UserResult
     {
-        //College?
+        public int? AddressId { get; set; }
     }
 }

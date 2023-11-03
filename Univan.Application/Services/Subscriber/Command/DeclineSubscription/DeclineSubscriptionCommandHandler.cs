@@ -2,6 +2,7 @@
 using MediatR;
 using Univan.Application.Validation;
 using Univan.Domain.Enums;
+using Univan.Domain.Events;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Subscriber.Command.DeclineSubscription
@@ -9,9 +10,11 @@ namespace Univan.Application.Services.Subscriber.Command.DeclineSubscription
     public class DeclineSubscriptionCommandHandler : IRequestHandler<DeclineSubscriptionCommand, Result>
     {
         private readonly ISubscriptionRepository _subscriptionRepository;
-        public DeclineSubscriptionCommandHandler(ISubscriptionRepository subscriptionRepository)
+        private readonly IMediator _mediator;
+        public DeclineSubscriptionCommandHandler(ISubscriptionRepository subscriptionRepository, IMediator mediator)
         {
             _subscriptionRepository = subscriptionRepository;
+            _mediator = mediator;
         }
 
         public async Task<Result> Handle(DeclineSubscriptionCommand request, CancellationToken cancellationToken)
@@ -24,6 +27,8 @@ namespace Univan.Application.Services.Subscriber.Command.DeclineSubscription
             }
 
             await _subscriptionRepository.RefuseSubscription(subscription);
+
+            await _mediator.Publish(new DeclinedSubscriptionMessage(subscription.DriverId, subscription.StudentId));
 
             return Result.Ok();
         }

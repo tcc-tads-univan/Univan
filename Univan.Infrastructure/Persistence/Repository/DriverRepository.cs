@@ -35,6 +35,7 @@ namespace Univan.Infrastructure.Persistence.Repository
         {
             return _dbContext.Set<Subscription>()
                 .Include(s => s.Student)
+                .Include(s => s.Student.Address)
                 .Include(s => s.SubscriptionHistory)
                 .FirstOrDefaultAsync(s => s.DriverId == driverId && s.SubscriptionId == subscriptionId);
         }

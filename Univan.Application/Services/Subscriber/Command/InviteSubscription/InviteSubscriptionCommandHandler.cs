@@ -3,6 +3,7 @@ using MediatR;
 using Univan.Application.Validation;
 using Univan.Domain.Entities;
 using Univan.Domain.Enums;
+using Univan.Domain.Events;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
@@ -12,12 +13,14 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
         private readonly IStudentRepository _studentRepository;
         private readonly IDriverRepository _driverRepository;
         private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IMediator _mediator;
 
-        public InviteSubscriptionCommandHandler(IStudentRepository studentRepository, IDriverRepository driverRepository, ISubscriptionRepository subscriptionRepository)
+        public InviteSubscriptionCommandHandler(IStudentRepository studentRepository, IDriverRepository driverRepository, ISubscriptionRepository subscriptionRepository, IMediator mediator)
         {
             _studentRepository = studentRepository;
             _driverRepository = driverRepository;
             _subscriptionRepository = subscriptionRepository;
+            _mediator = mediator;
         }
 
         public async Task<Result> Handle(InviteSubscriptionCommand request, CancellationToken cancellationToken)
@@ -46,6 +49,8 @@ namespace Univan.Application.Services.Subscriber.Command.InviteSubscription
             };
 
             await _subscriptionRepository.CreateSubscription(subscription);
+
+            await _mediator.Publish(new InviteSubscriptionMessage(subscription.DriverId, subscription.StudentId, subscription.MonthlyFee, subscription.ExpirationDay));
 
             return Result.Ok();
         }

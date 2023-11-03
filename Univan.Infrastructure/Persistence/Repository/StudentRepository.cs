@@ -35,7 +35,7 @@ namespace Univan.Infrastructure.Persistence.Repository
 
         public Task<Student> GetStudentBasicInfo(int studentId)
         {
-            return _dbContext.Set<Student>().FirstOrDefaultAsync(s => s.Id == studentId);
+            return _dbContext.Set<Student>().Include(s => s.Address).FirstOrDefaultAsync(s => s.Id == studentId);
         }
 
         public Task<Subscription> GetSubscription(int studentId)
