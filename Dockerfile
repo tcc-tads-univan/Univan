@@ -11,6 +11,7 @@ COPY ["Univan.Api/Univan.Api.csproj", "Univan.Api/"]
 COPY ["Univan.Application/Univan.Application.csproj", "Univan.Application/"]
 COPY ["Univan.Domain/Univan.Domain.csproj", "Univan.Domain/"]
 COPY ["Univan.Infrastructure/Univan.Infrastructure.csproj", "Univan.Infrastructure/"]
+COPY ./nuget.config .
 RUN dotnet restore "Univan.Api/Univan.Api.csproj"
 COPY . .
 WORKDIR "/src/Univan.Api"

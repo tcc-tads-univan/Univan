@@ -31,7 +31,8 @@ namespace Univan.Application.Services.Student.Queries.GetStudentById
                 Name = student.Name,
                 PhoneNumber = student.PhoneNumber,
                 PhotoUrl = student.PhotoUrl,
-                Rating = student.Rating
+                Rating = student.Rating,
+                AddressId = student.AddressId
             };
 
             return Result.Ok(result);
