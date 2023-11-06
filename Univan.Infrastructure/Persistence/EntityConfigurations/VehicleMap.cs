@@ -13,6 +13,7 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
             builder.Property(v => v.Plate).IsRequired().HasMaxLength(10);
             builder.Property(v => v.Model).HasMaxLength(32);
             builder.Property(v => v.Seats).IsRequired();
+            builder.Property(v => v.GaragePlaceId).IsRequired();
         }
     }
 }

@@ -2,6 +2,7 @@
 using MediatR;
 using Univan.Application.Validation;
 using Univan.Domain.Entities;
+using Univan.Domain.Events;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Driver.Command.CreateVehicle
@@ -9,9 +10,12 @@ namespace Univan.Application.Services.Driver.Command.CreateVehicle
     public class CreateVehicleCommandHandler : IRequestHandler<CreateVehicleCommand, Result>
     {
         private readonly IDriverRepository _driverRepository;
-        public CreateVehicleCommandHandler(IDriverRepository driverRepository)
+        private readonly IMediator _mediator;
+
+        public CreateVehicleCommandHandler(IDriverRepository driverRepository, IMediator mediator)
         {
             _driverRepository = driverRepository;
+            _mediator = mediator;
         }
 
         public async Task<Result> Handle(CreateVehicleCommand request, CancellationToken cancellationToken)
@@ -28,12 +32,15 @@ namespace Univan.Application.Services.Driver.Command.CreateVehicle
                 Model = request.Model,
                 FabricationYear = request.FabricationYear,
                 Plate = request.Plate,
-                Seats = request.Seats
+                Seats = request.Seats,
+                GaragePlaceId = request.GarageAddress
             };
 
             driver.Vehicle = vehicle;
 
             await _driverRepository.SaveUserChanges();
+            
+            //await _mediator.Publish();
 
             return Result.Ok();
         }

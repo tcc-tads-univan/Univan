@@ -9,6 +9,8 @@ namespace Univan.Application.Services.Driver.Command.CreateVehicle
             RuleFor(v => v.Plate).NotEmpty();
          
             RuleFor(v => v.Model).NotEmpty();
+
+            RuleFor(v => v.GarageAddress).NotEmpty();
             
             RuleFor(v => v.FabricationYear)
                 .NotEmpty()
