@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Net.Mime;
 using Univan.Domain.Events;
 
 namespace Univan.Application.Services.Subscriber.Event
@@ -21,7 +22,12 @@ namespace Univan.Application.Services.Subscriber.Event
             };
             */
 
-            //await _publish.Publish(eventMessage, ev => ev.SetRoutingKey(eventMessage.GetType().Name));
+            await _publish.Publish(new AcceptedSubscriptionMessage(1,1), ev => 
+            {
+                ev.ContentType = new ContentType("application/json");
+                ev.Headers.Set("__Type__", "saveUserMessage");
+            });
+
             _logger.LogInformation("StudentAddressMessage SENT!");
         }
     }

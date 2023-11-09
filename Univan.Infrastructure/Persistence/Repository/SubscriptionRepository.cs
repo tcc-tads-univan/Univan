@@ -23,7 +23,17 @@ namespace Univan.Infrastructure.Persistence.Repository
 
         public Task<Subscription> GetPendingSubscriptionById(int subscriptionId)
         {
-            return _dbContext.Set<Subscription>().FirstOrDefaultAsync(s => s.SubscriptionId == subscriptionId && s.Status == nameof(SubscriptionStatus.PENDING));
+            return _dbContext.Set<Subscription>()
+                .FirstOrDefaultAsync(s => s.SubscriptionId == subscriptionId && s.Status == nameof(SubscriptionStatus.PENDING));
+        }
+
+        public Task<Subscription> GetSubscriptionByIdAndDriverId(int subscriptionId, int driverId)
+        {
+            return _dbContext.Set<Subscription>()
+                .Include(s => s.SubscriptionHistory)
+                .FirstOrDefaultAsync(s => s.SubscriptionId == subscriptionId &&
+                    s.Status == nameof(SubscriptionStatus.ACTIVE) &&
+                    s.DriverId == driverId);
         }
 
         public async Task RefuseSubscription(Subscription subscription)

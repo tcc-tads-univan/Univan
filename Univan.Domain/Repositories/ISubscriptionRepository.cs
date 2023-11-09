@@ -1,4 +1,5 @@
 ﻿using Univan.Domain.Entities;
+using Univan.Domain.Enums;
 
 namespace Univan.Domain.Repositories
 {
@@ -6,6 +7,7 @@ namespace Univan.Domain.Repositories
     {
         Task CreateSubscription(Subscription subscription);
         Task<Subscription> GetPendingSubscriptionById(int subscriptionId);
+        Task<Subscription> GetSubscriptionByIdAndDriverId(int subscriptionId, int driverId);
         Task SaveSubscription();
         Task RefuseSubscription(Subscription subscription);
     }

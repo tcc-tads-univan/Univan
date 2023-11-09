@@ -12,6 +12,7 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
             builder.HasKey(s => s.SubscriptionHistoryId);
             builder.Property(s => s.PaymentStatus).IsRequired().HasMaxLength(32);
             builder.Property(s => s.PaymentDate);
+            builder.Property(s => s.IssueDate);
             builder.Property(s => s.Value).IsRequired().HasPrecision(7,2);
         }
     }
