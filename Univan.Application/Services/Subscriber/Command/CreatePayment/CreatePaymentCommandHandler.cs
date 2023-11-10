@@ -19,7 +19,12 @@ namespace Univan.Application.Services.Subscriber.Command.CreatePayment
         {
             var subscription = await _subscriptionRepository.GetSubscriptionByIdAndDriverId(request.SubscriptionId, request.DriverId);
 
-            var lastPayment = subscription.SubscriptionHistory.LastOrDefault();
+            if(subscription is null)
+            {
+                return Result.Fail(ValidationErrors.Subscription.NotFound);
+            }
+
+            var lastPayment = subscription?.SubscriptionHistory.LastOrDefault();
 
             if (lastPayment?.IssueDate.Month == DateTime.Now.Month)
             {

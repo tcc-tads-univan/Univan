@@ -2,16 +2,16 @@
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Univan.Api.Contracts.Common;
 using Univan.Api.Contracts.Driver;
-using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Driver.Command.CreateDriver;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
 using Univan.Application.Services.Driver.Command.DeleteVehicle;
 using Univan.Application.Services.Driver.Command.UpdateDriver;
+using Univan.Application.Services.Driver.Command.UpdateRating;
 using Univan.Application.Services.Driver.Queries.GetDriverBasicInfosById;
 using Univan.Application.Services.Driver.Queries.GetDriverById;
 using Univan.Application.Services.Driver.Queries.GetVehicleById;
-using Univan.Application.Services.Student.Command.UpdateStudent;
 
 namespace Univan.Api.Controllers
 {
@@ -45,6 +45,20 @@ namespace Univan.Api.Controllers
         {
             var command = _mapper.Map<UpdateDriverCommand>(request);
             command.Id = driverId;
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpPut]
+        [Route("{driverId}/rating")]
+        public async Task<IActionResult> UpdateDriverRating(int driverId, UserUpdateRatingRequest request)
+        {
+            var command = new UpdateDriverRatingCommand(driverId, request.Rating);
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
             {

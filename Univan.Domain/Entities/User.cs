@@ -10,6 +10,15 @@
         public string PhoneNumber { get; set; }
         public DateTime Birthdate { get; set; }
         public decimal Rating { get; set; }
+        public int TotalRides { get; set; }
         public string PhotoUrl { get; set; }
+
+        public void UpdateRating(decimal ratingValue)
+        {
+            decimal lastRating = Rating * TotalRides;
+            decimal currentRating = lastRating + ratingValue;
+            TotalRides += 1;
+            Rating = currentRating / TotalRides;
+        }
     }
 }
