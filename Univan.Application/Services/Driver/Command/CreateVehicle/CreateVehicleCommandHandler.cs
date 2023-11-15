@@ -40,7 +40,7 @@ namespace Univan.Application.Services.Driver.Command.CreateVehicle
 
             await _driverRepository.SaveUserChanges();
             
-            //await _mediator.Publish();
+            await _mediator.Publish(new UserAddressEvent(driver.Id, relatedTo: null, vehicle.GaragePlaceId));
 
             return Result.Ok();
         }

@@ -24,6 +24,7 @@ namespace Univan.Infrastructure.Persistence.Repository
         public Task<Subscription> GetPendingSubscriptionById(int subscriptionId)
         {
             return _dbContext.Set<Subscription>()
+                .Include(s => s.Student.Address)
                 .FirstOrDefaultAsync(s => s.SubscriptionId == subscriptionId && s.Status == nameof(SubscriptionStatus.PENDING));
         }
 

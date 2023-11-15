@@ -30,6 +30,7 @@ namespace Univan.Application.Services.Subscriber.Command.AcceptSubscription
             await _subscriptionRepository.SaveSubscription();
 
             await _mediator.Publish(new AcceptedSubscriptionMessage(subscription.DriverId, subscription.StudentId));
+            await _mediator.Publish(new UserAddressEvent(subscription.StudentId, relatedTo: subscription.DriverId, subscription.Student?.Address?.GooglePlaceId ?? ""));
 
             return Result.Ok();
         }

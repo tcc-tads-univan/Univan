@@ -2,17 +2,17 @@
 
 namespace Univan.Domain.Events
 {
-    public class StudentAddressEvent : INotification
+    public class UserAddressEvent : INotification
     {
-        public StudentAddressEvent(int driverId, int studentId, string placeId)
+        public UserAddressEvent(int userId, int? relatedTo, string placeId)
         {
-            DriverId = driverId;
-            StudentId = studentId;
+            UserId = userId;
+            RelatedTo = relatedTo;
             PlaceId = placeId;
         }
 
-        public int DriverId { get; set; }
-        public int StudentId { get; set; }
+        public int UserId { get; set; }
+        public int? RelatedTo { get; set; }
         public string PlaceId { get; set; }
     }
 }
