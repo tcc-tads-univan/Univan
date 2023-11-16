@@ -12,7 +12,7 @@ namespace Univan.Application.Services.Student.Command.CreateAddress
 
             RuleFor(a => a.PlaceId)
                 .NotEmpty()
-                .MaximumLength(120);
+                .MaximumLength(500);
         }
     }
 }
