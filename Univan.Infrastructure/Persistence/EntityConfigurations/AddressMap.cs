@@ -11,7 +11,7 @@ namespace Univan.Infrastructure.Persistence.EntityConfigurations
             builder.ToTable("Address");
             builder.HasKey(u => u.Id);
             builder.Property(d => d.CompleteLineAddress).HasMaxLength(500);
-            builder.Property(d => d.GooglePlaceId).HasMaxLength(120);
+            builder.Property(d => d.GooglePlaceId).HasMaxLength(500);
         }
     }
 }

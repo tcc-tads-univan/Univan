@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Univan.Infrastructure.Persistence.Context;
 
@@ -11,9 +12,11 @@ using Univan.Infrastructure.Persistence.Context;
 namespace Univan.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UnivanContext))]
-    partial class UnivanContextModelSnapshot : ModelSnapshot
+    [Migration("20231110001806_0911TotalRides")]
+    partial class _0911TotalRides
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,8 +38,8 @@ namespace Univan.Infrastructure.Persistence.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("GooglePlaceId")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
                     b.HasKey("Id");
 

@@ -1,12 +1,15 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Univan.Api.Contracts.Common;
 using Univan.Api.Contracts.Driver;
 using Univan.Api.Contracts.Student;
 using Univan.Application.Services.Driver.Command.CreateVehicle;
+using Univan.Application.Services.Driver.Command.UpdateRating;
 using Univan.Application.Services.Student.Command.CreateAddress;
 using Univan.Application.Services.Student.Command.CreateStudent;
 using Univan.Application.Services.Student.Command.DeleteAddress;
+using Univan.Application.Services.Student.Command.UpdateRating;
 using Univan.Application.Services.Student.Command.UpdateStudent;
 using Univan.Application.Services.Student.Queries.GetStudentAddressById;
 using Univan.Application.Services.Student.Queries.GetStudentBasicInfosById;
@@ -74,6 +77,20 @@ namespace Univan.Api.Controllers
         {
             var command = _mapper.Map<UpdateStudentCommand>(request);
             command.Id = studentId;
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpPut]
+        [Route("{studentId}/rating")]
+        public async Task<IActionResult> UpdateDriverRating(int studentId, UserUpdateRatingRequest request)
+        {
+            var command = new UpdateStudentRatingCommand(studentId, request.Rating);
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
             {

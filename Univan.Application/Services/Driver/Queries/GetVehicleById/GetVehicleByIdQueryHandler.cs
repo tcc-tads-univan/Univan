@@ -29,7 +29,8 @@ namespace Univan.Application.Services.Driver.Queries.GetVehicleById
                 FabricationYear = vehicle.FabricationYear,
                 Model = vehicle.Model,
                 Plate = vehicle.Plate,
-                Seats = vehicle.Seats
+                Seats = vehicle.Seats,
+                GarageAddress = vehicle.GaragePlaceId
             };
 
             return Result.Ok(vehicleResult);

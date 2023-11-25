@@ -3,8 +3,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Subscription;
 using Univan.Application.Services.Subscriber.Command.AcceptSubscription;
+using Univan.Application.Services.Subscriber.Command.CreatePayment;
 using Univan.Application.Services.Subscriber.Command.DeclineSubscription;
 using Univan.Application.Services.Subscriber.Command.InviteSubscription;
+using Univan.Application.Services.Subscriber.Command.UpdatePayment;
 using Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionById;
 using Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptions;
 using Univan.Application.Services.Subscriber.Queries.GetStudentPendingSubscriptions;
@@ -121,6 +123,34 @@ namespace Univan.Api.Controllers
             {
                 var studentSubscription = _mapper.Map<StudentSubscriptionResponse>(result.Value);
                 return Ok(studentSubscription);
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpPost]
+        [Route("Driver/{driverId}/subscriptions/{subscriptionId}/payment")]
+        public async Task<IActionResult> CreateSubscriptionPayment(int driverId, int subscriptionId)
+        {
+            var command = new CreatePaymentCommand(subscriptionId, driverId);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpPost]
+        [Route("Driver/{driverId}/subscriptions/{subscriptionId}/payment/{paymentId}/complete")]
+        public async Task<IActionResult> CreateSubscriptionPayment(int driverId, int subscriptionId, int paymentId)
+        {
+            var command = new UpdatePaymentCommand(subscriptionId, driverId, paymentId);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return NoContent();
             }
 
             return ProblemDetails(result.Errors);

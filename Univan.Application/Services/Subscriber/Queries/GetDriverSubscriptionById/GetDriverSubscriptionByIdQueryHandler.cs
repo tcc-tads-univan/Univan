@@ -27,6 +27,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionBy
 
             var result = new DriverStudentSubscriptionResult()
             {
+                SubscriptionId = driverStudentSubscription.SubscriptionId,
                 Name = driverStudentSubscription.Student?.Name,
                 Phone = driverStudentSubscription.Student?.PhoneNumber,
                 SubscriptionStatus = driverStudentSubscription.Status,
@@ -44,6 +45,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionBy
         {
             return new Payment()
             {
+                PaymentId = subHistory.SubscriptionHistoryId,
                 Date = subHistory.PaymentDate.HasValue ? subHistory.PaymentDate.Value.Date : null,
                 Value = subHistory.Value,
                 Status = (PaymentStatus)Enum.Parse(typeof(PaymentStatus), subHistory.PaymentStatus)

@@ -43,7 +43,7 @@ namespace Univan.Infrastructure.Storage
         }
         public string GetDefaultUrlImage()
         {
-            return FormatUserUrlImage("dafault");
+            return FormatUserUrlImage("default");
         }
 
         private string FormatUserUrlImage(string imageName)

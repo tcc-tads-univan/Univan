@@ -30,7 +30,8 @@ namespace Univan.Application.Services.Student.Queries.GetStudentBasicInfosById
                 PhoneNumber = student.PhoneNumber,
                 PhotoUrl = student.PhotoUrl,
                 Rating = student.Rating,
-                LineAddress = student.Address?.CompleteLineAddress
+                LineAddress = student.Address?.CompleteLineAddress,
+                PlaceId = student.Address?.GooglePlaceId
             };
 
             return Result.Ok(studentResult);

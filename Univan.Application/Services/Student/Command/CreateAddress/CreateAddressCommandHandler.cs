@@ -2,6 +2,7 @@
 using MediatR;
 using Univan.Application.Validation;
 using Univan.Domain.Entities;
+using Univan.Domain.Events;
 using Univan.Domain.Repositories;
 
 namespace Univan.Application.Services.Student.Command.CreateAddress
@@ -9,9 +10,11 @@ namespace Univan.Application.Services.Student.Command.CreateAddress
     public class CreateAddressCommandHandler : IRequestHandler<CreateAddressCommand, Result>
     {
         private readonly IStudentRepository _studentRepository;
-        public CreateAddressCommandHandler(IStudentRepository studentRepository)
+        private readonly IMediator _mediator;
+        public CreateAddressCommandHandler(IStudentRepository studentRepository, IMediator mediator)
         {
             _studentRepository = studentRepository;
+            _mediator = mediator;
         }
         public async Task<Result> Handle(CreateAddressCommand request, CancellationToken cancellationToken)
         {
@@ -29,8 +32,10 @@ namespace Univan.Application.Services.Student.Command.CreateAddress
             };
 
             student.Address = studentAddress;
-
             await _studentRepository.SaveUserChanges();
+
+            await _mediator.Publish(new UserAddressEvent(student.Id, relatedTo: null, studentAddress.GooglePlaceId));
+
             return Result.Ok();
         }
     }

@@ -11,6 +11,7 @@ namespace Univan.Application.Validation
             internal static Error DriverSubscriptionNotFound => new Error("The driver was not found or does not have students subscriptions.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
             internal static Error NotFound => new Error("Subscription was not found.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
             internal static Error StudentsLimitation => new Error("You cannot invite more students.").WithMetadata(nameof(ErrorType), ErrorType.NotFound);
+            internal static Error OnlyOnePaymentPerMonth => new Error("You cannot create more than one payment per month.").WithMetadata(nameof(ErrorType), ErrorType.Conflit);
         }
     }
 }

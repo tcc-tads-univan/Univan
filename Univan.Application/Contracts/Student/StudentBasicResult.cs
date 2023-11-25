@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Univan.Application.Contracts.Student
+﻿namespace Univan.Application.Contracts.Student
 {
     public class StudentBasicResult
     {
@@ -8,6 +6,7 @@ namespace Univan.Application.Contracts.Student
         public string PhoneNumber { get; set; }
         public decimal Rating { get; set; }
         public string PhotoUrl { get; set; }
-        public string LineAddress { get; set; } //Analyze address tables format
+        public string LineAddress { get; set; }
+        public string PlaceId { get; set; }
     }
 }
