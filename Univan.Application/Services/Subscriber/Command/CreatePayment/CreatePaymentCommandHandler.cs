@@ -26,10 +26,11 @@ namespace Univan.Application.Services.Subscriber.Command.CreatePayment
 
             var lastPayment = subscription?.SubscriptionHistory.LastOrDefault();
 
+            /* Removing to avoid block during test
             if (lastPayment?.IssueDate.Month == DateTime.Now.Month)
             {
                 return Result.Fail(ValidationErrors.Subscription.OnlyOnePaymentPerMonth);
-            }
+            }*/
 
             var payment = new SubscriptionHistory()
             {
