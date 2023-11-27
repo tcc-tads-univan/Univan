@@ -29,6 +29,7 @@ namespace Univan.Application.Services.Subscriber.Queries.GetDriverSubscriptionBy
             {
                 SubscriptionId = driverStudentSubscription.SubscriptionId,
                 Name = driverStudentSubscription.Student?.Name,
+                MonthlyFee = driverStudentSubscription.MonthlyFee,
                 Phone = driverStudentSubscription.Student?.PhoneNumber,
                 SubscriptionStatus = driverStudentSubscription.Status,
                 FinalAddress = driverStudentSubscription.Student?.Address?.CompleteLineAddress,
