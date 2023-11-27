@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Univan.Api.Contracts.Subscription;
 using Univan.Application.Services.Subscriber.Command.AcceptSubscription;
+using Univan.Application.Services.Subscriber.Command.CancelSubscription;
 using Univan.Application.Services.Subscriber.Command.CreatePayment;
 using Univan.Application.Services.Subscriber.Command.DeclineSubscription;
 using Univan.Application.Services.Subscriber.Command.InviteSubscription;
@@ -133,6 +134,20 @@ namespace Univan.Api.Controllers
         public async Task<IActionResult> CreateSubscriptionPayment(int driverId, int subscriptionId)
         {
             var command = new CreatePaymentCommand(subscriptionId, driverId);
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+
+            return ProblemDetails(result.Errors);
+        }
+
+        [HttpDelete]
+        [Route("Driver/{driverId}/subscriptions/{subscriptionId}")]
+        public async Task<IActionResult> CancelSubscription(int driverId, int subscriptionId)
+        {
+            var command = new CancelSubscriptionCommand(subscriptionId, driverId);
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
             {
